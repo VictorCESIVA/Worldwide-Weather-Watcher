@@ -34,8 +34,8 @@ Couper l'alimentation avant de modifier le câblage. Le montage utilise Nucleo �
 | EEPROM externe AT24C32 prévue | I²C, adresse `0x50`, A0/A1/A2 à 0, WP à 0 | PB8 SCL, PB9 SDA |
 | Luminosité | A2 | PA4, ADC1 canal 9 |
 | LED Chainable RGB P9813 | Entrée IN, alimentation séparée 5V ; signaux D6/D7 | PB10 horloge, PA8 données |
-| Bouton rouge | Première ligne de **D8** | PA9, entrée active à 0 |
-| Bouton vert | Deuxième ligne de **D8** | PC7, entrée active à 0 |
+| Bouton rouge | Deuxième ligne de **D8** (D9) | PC7, entrée active à 0 |
+| Bouton vert | Première ligne de **D8** (D8) | PA9, entrée active à 0 |
 | GPS | A0 | PA0 réception UART4, PA1 émission ; échange RX/TX activé dans UART4 |
 | Console ST-LINK | USB ST-LINK de la Nucleo | PA2 USART2 TX, PA3 RX |
 | SD CS | Jaune du câble Grove D2 → broche SD 4 | PA10 |
@@ -44,6 +44,8 @@ Couper l'alimentation avant de modifier le câblage. Le montage utilise Nucleo �
 | SD MISO | Blanc du câble Grove D4 → SD MISO | PB4, SPI1 AF5 |
 
 Le GPS reste sur A0 et le port UART du Grove reste libre pour la console ST-LINK. Les boutons sont déplacés sur D8 car D2/D3 servent à la SD. Leur initialisation ne modifie pas les GPIO du SPI. La LED embarquée PA5 n'est pas utilisée comme indicateur de la station ; l'indication repose sur le module RGB.
+
+Les capuchons du [Grove Dual Button](https://wiki.seeedstudio.com/Grove-Dual-Button/) sont interchangeables. Sur le module de Victor, l'appui rouge tenu seul a déclenché économique avec l'ancien ordre des signaux : rouge est donc PC7 et vert PA9. Le code associe maintenant ces couleurs aux broches correspondantes. Le port blanc reste D8.
 
 ### Alimentation et essai de la LED
 

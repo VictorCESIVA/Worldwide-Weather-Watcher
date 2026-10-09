@@ -1,0 +1,25 @@
+9 octobre 2026 - contrôles physiques, lecteur SD retiré
+
+Avant correction :
+- Après les démarrages rouge maintenu : MODE=standard.
+- Lecture GPIO au repos : PA9=1, PC7=1.
+- Une capture d'appui : PA9=1, PC7=0.
+- Après retour standard puis appui rouge seul confirmé par Victor :
+  mdb 0x20000c0d 1 -> 03, soit mode économique dans ce binaire.
+- Correction de l'association des couleurs : rouge=PC7, vert=PA9.
+
+Compilation :
+release              SUCCESS   00:00:03.728
+debug                SUCCESS   00:00:04.938
+diagnostic           SUCCESS   00:00:03.136
+diagnostic_sd_grove  SUCCESS   00:00:03.189
+
+Téléversement : Verified OK (voir flash-boutons.txt).
+Console du programme corrigé :
+3WW 1.0.0 LOT=CESI-2026 BUILD=2 MODE=standard
+PARAMETRES=defauts (EEPROM absente ou vierge) LOG_INTERVAL=10 FILE_MAX_SIZE=2048 TIMEOUT=30
+date;temperature_C;humidite_pct;pression_hPa;lumi_0_1023;niveau;latitude;longitude
+NA;21.8;47.4;1009.8;1023;forte;NA;NA
+
+Une mesure de luminosité ne valide pas sa réponse à l'obscurcissement.
+Le mode configuration après correction et la relecture RTC restent à vérifier.

@@ -31,10 +31,13 @@
  * D2 reste disponible dans le profil SPI Arduino initial.
  */
 #ifdef SD_GROVE_BREAKOUT
-#define BUTTON1_PORT GPIOA
-#define BUTTON1_PIN GPIO_PIN_9
-#define BUTTON2_PORT GPIOC
-#define BUTTON2_PIN GPIO_PIN_7
+/* Couleurs du module de Victor : rouge sur D9, vert sur D8.
+ * L'appui rouge avec l'ancien ordre a declenche le mode economique.
+ */
+#define BUTTON1_PORT GPIOC
+#define BUTTON1_PIN GPIO_PIN_7
+#define BUTTON2_PORT GPIOA
+#define BUTTON2_PIN GPIO_PIN_9
 #else
 #define BUTTON1_PORT GPIOA
 #define BUTTON1_PIN GPIO_PIN_10

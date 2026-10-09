@@ -64,6 +64,16 @@ Les captures série et diagnostics bruts restent locaux afin de ne pas publier u
 
 Victor signale une LED éteinte après la tentative de démarrage en configuration et confirme la référence **Chainable RGB LED 2.0**. La notice Seeed indique 5 V, alors que le branchement direct D6 précédemment communiqué utilisait le Grove réglé sur 3V3. La procédure est corrigée : essai séparé de la LED en 5 V sur l'entrée IN, en conservant PB10/PA8 et le Grove sur 3V3. Le lecteur SD est déconnecté pendant cet essai. Aucun résultat lumineux n'est encore disponible et le mode réellement atteint pendant la tentative précédente n'a pas été confirmé par le débogueur. Au début de cette reprise, ST-LINK apparaît dans `lsusb`, mais aucun port série n'est présent.
 
+### Lecteur SD retiré et association des boutons
+
+Victor demande de reporter l'essai SD et confirme son retrait ; les autres connexions restent identiques, donc l'essai LED en 5V n'est pas encore effectué. Une réinitialisation USB ciblée rétablit le port série et ST-LINK. La Flash correspond au binaire Release vérifié. Les tentatives de démarrage avec le rouge maintenu restent en standard avec l'ancien brochage.
+
+La lecture directe des GPIO détecte PC7 à 0 pendant un appui. Après retour en standard, Victor confirme un appui prolongé sur le **rouge seul** ; le mode lu est **économique (3)**. Le programme traitait donc ce bouton comme le vert. Les associations sont corrigées pour son module : **rouge PC7/D9**, **vert PA9/D8**, prise Grove toujours sur D8. Les quatre profils ARM recompilent avec succès. Le nouveau programme complet, BUILD=2, est téléversé et **Verified OK** ; son premier cycle donne **21,8 °C**, **47,4 %**, **1009,8 hPa**, luminosité **1023/1023**, date et GPS absents. Preuves : `verification/boutons-corriges.txt`, `verification/flash-boutons.txt`.
+
+Pendant les lectures GDB, la cible reste parfois arrêtée après détachement ; la procédure de diagnostic doit explicitement reprendre l'exécution. Une capture a également montré une exception processeur lors d'un `printf` (`CFSR=0x8200`, `HFSR=0x40000000`). Sa cause n'est pas établie. Après redémarrage, la console répond et le premier cycle de la version corrigée se termine ; cela ne suffit pas à valider l'endurance. Les essais suivants doivent contrôler la stabilité sans arrêts du débogueur.
+
+Le nouveau démarrage avec le rouge maintenu et le réglage RTC par les commandes normales restent à confirmer. Aucun réglage RTC n'est annoncé comme réussi avant réception de `OK RTC` et relecture de l'heure.
+
 ## Validation finale encore nécessaire
 
 - Valider les lectures RTC/BME280 avec leurs nouveaux pilotes sur le montage terminé, puis régler la date et l'heure.
