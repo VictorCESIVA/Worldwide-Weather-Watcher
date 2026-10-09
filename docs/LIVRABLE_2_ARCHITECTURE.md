@@ -1,68 +1,96 @@
 # Livrable 2 - Architecture du programme
 
-Version à figer et à remettre une seule fois. Ce document décrit la structure, les responsabilités et les données ; il ne contient pas le programme final. Le livrable 1 est déjà rendu et n'est pas refait.
+Projet Worldwide Weather Watcher — Station météo sur STM32 Nucleo L476RG
 
-## Organisation
+## Organisation générale
+
+Nous avons choisi de séparer le programme en plusieurs fichiers C. Chaque fichier a un rôle précis : lire les capteurs, gérer les modes, traiter les commandes ou enregistrer les mesures. Cela nous permet de travailler sur une partie du programme sans devoir modifier toute la boucle principale.
+
+Nous partons de l'architecture fournie pour le projet. Les pilotes servent à communiquer avec les composants ; nos fonctions utilisent ces pilotes pour faire fonctionner la station.
 
 ```mermaid
 flowchart TD
     MAIN[main.c : démarrage et boucle] --> INIT[setup.c : horloge et HAL]
-    MAIN --> STATION[station.c : orchestration]
-    STATION --> MODES[modes.c : transitions]
-    STATION --> CONFIG[parametres.c : commandes et validation]
-    CONFIG --> EEPROM[eeprom.c : conservation des paramètres]
-    STATION --> MESURES[mesures.c : moyenne glissante]
+    MAIN --> STATION[station.c : fonctionnement de la station]
+    STATION --> MODES[modes.c : changements de mode]
+    STATION --> CONFIG[parametres.c : réglages et commandes]
+    CONFIG --> EEPROM[eeprom.c : sauvegarde des réglages]
+    STATION --> MESURES[mesures.c : historique et moyennes]
     STATION --> SERIE[serie.c : réception UART]
-    STATION --> GPS[nmea.c : validation GPS]
-    STATION --> PILOTES[cesi_grove : capteurs, RTC, boutons, LED]
+    STATION --> GPS[nmea.c : lecture des trames GPS]
+    STATION --> PILOTES[Pilotes : capteurs, RTC, boutons et LED]
     STATION --> SD[sd_files.c : fichiers et archives]
-    SD --> FAT[FatFs : système de fichiers]
-    FAT --> SPI[sd_logger.c : secteurs SPI]
+    SD --> FAT[FatFs et sd_logger.c : accès à la carte SD]
 ```
 
-Les noms et l'API des pilotes du dépôt CESI sont conservés. Le capteur réellement fourni est un BME280 et la RTC une PCF85063TP ; les pilotes sont adaptés à ces références. Les pilotes Bosch et FatFs restent des bibliothèques matérielles ; la logique du projet est du C avec fonctions, conditions, structures, tableaux, pointeurs et durées mesurées par `HAL_GetTick`.
+## Rôle des fichiers et fonctions principales
 
-## Données persistantes en RAM
-
-| Donnée | Contenu | Durée de vie |
+| Fichier | Rôle | Fonctions principales |
 |---|---|---|
-| `Parametres config` | Intervalle, limite des fichiers, timeout, activations et seuils | Programme entier |
-| `Mode mode, precedent` | État de l'automate et mode avant maintenance | Programme entier |
-| `Capteur lumi, temp, humidite, pression` | Dix mesures, somme, indice circulaire, nombre de valeurs et erreurs | Programme entier |
-| `RTC_DateTime date` | Date et heure validées | Dernier cycle |
-| `GPS_Data gps` | Dernière position validée pendant le cycle | Dernier cycle |
-| Tampons UART | Octets reçus pendant les transactions matérielles | Programme entier |
-| Compteurs et dates de début | Timeout, inactivité, durée des boutons, alternance GPS | Programme entier |
+| `main.c` | Initialiser la carte, puis appeler la boucle de la station | `main` |
+| `setup.c` | Configurer l'horloge et les périphériques de la carte | Fonctions d'initialisation HAL |
+| `station.c` | Relier les différentes parties du programme et gérer les acquisitions | `station_init`, `station_boucle` |
+| `modes.c` | Choisir le prochain mode selon le bouton utilisé et le mode actuel | `mode_apres_appui` |
+| `parametres.c` | Définir les valeurs par défaut et vérifier les commandes, la date et l'heure | `parametres_defaut`, `parametres_modifier`, `parametres_valides`, `regler_rtc` |
+| `eeprom.c` | Charger et sauvegarder les paramètres, avec deux copies et un contrôle de validité | `parametres_charger`, `parametres_sauver` |
+| `mesures.c` | Conserver les dernières mesures, calculer leur moyenne et compter les erreurs | `mesure_ajouter`, `mesure_moyenne`, `mesure_echouer` |
+| `serie.c` | Recevoir les octets de la console et du GPS | `serie_init`, `serie_lire`, `serie_debordement` |
+| `nmea.c` | Vérifier une trame GPS avant d'utiliser la position | `nmea_gga` |
+| `sd_files.c` | Enregistrer les lignes de mesures et archiver les fichiers pleins | `SDLogger_Mount`, `SDLogger_Append`, `SDLogger_Unmount` |
+| `sd_logger.c` | Communiquer avec la carte SD par SPI | Fonctions de lecture et d'écriture des secteurs |
 
-Les données de travail durables sont statiques et ne sont pas recréées sur la pile à chaque boucle. Les petites valeurs locales sont temporaires. La moyenne est mise à jour par adresse avec une somme conservée, sans décaler tout le tableau. Il n'y a pas d'allocation dynamique dans le code écrit pour ce projet.
+Les fichiers `.h` contiennent les structures et les déclarations des fonctions utilisées par les autres fichiers. Pour la carte SD, nous utilisons FatFs afin de gérer les fichiers.
 
-## Interfaces des modules
+## Variables et structures
 
-| Module | Fonctions principales | Responsabilité |
-|---|---|---|
-| Station | `station_init`, `station_boucle` | Ordonnancer les opérations |
-| Modes | `mode_apres_appui` | Déterminer l'état suivant |
-| Paramètres | `parametres_defaut`, `parametres_modifier`, `parametres_valides` | Vérifier toute modification avant application |
-| Date | `date_valide`, `regler_rtc` | Vérifier date, heure et jour |
-| EEPROM | `parametres_charger`, `parametres_sauver` | Deux copies avec contrôle d'intégrité |
-| Mesures | `mesure_ajouter`, `mesure_echouer`, `mesure_moyenne` | Historique et compteur d'erreurs par capteur |
-| Série | `serie_init`, `serie_lire`, `serie_debordement` | Séparer réception et interprétation |
-| GPS | `nmea_gga` | Vérifier checksum, champs et position |
-| SD | `SDLogger_Mount`, `SDLogger_Append`, `SDLogger_Unmount` | Fermer les fichiers après chaque écriture et archiver avant réutilisation |
+Nous regroupons les données qui vont ensemble dans des structures. Par exemple, tous les réglages sont dans `Parametres`, et les informations d'un capteur sont dans `Capteur`.
 
-## Cycle prévu
+| Variable ou structure | Utilisation |
+|---|---|
+| `Parametres config` | Intervalle entre les mesures, taille maximale des fichiers, timeout, capteurs activés et seuils |
+| `Mode mode` | Mode actuel : standard, configuration, maintenance ou économique |
+| `Mode precedent` | Mode à retrouver en quittant la maintenance |
+| `Capteur lumi, temp, humidite, pression` | Tableau des dix dernières mesures valides, somme, nombre de valeurs, prochaine case à utiliser et état du capteur |
+| `RTC_DateTime date` | Date et heure du cycle de mesure |
+| `GPS_Data gps` | Position GPS et informations permettant de vérifier sa validité |
+| Tampons de réception | Octets reçus et lignes en cours de lecture sur la console et le GPS |
+| Compteurs de temps | Début d'un cycle, dernière activité et durée des appuis sur les boutons |
 
-1. Initialiser les périphériques et charger les paramètres ; à défaut, utiliser les valeurs du sujet.
-2. Déterminer le mode initial avec le bouton rouge.
-3. À chaque passage, traiter les boutons et la console.
-4. Hors configuration, démarrer une acquisition si l'intervalle est écoulé.
-5. Réessayer les périphériques manquants jusqu'au timeout, puis produire `NA`.
-6. Mettre à jour les structures uniquement avec les mesures valides.
-7. Produire une ligne ; l'écrire sur SD en standard/économique si l'horodatage est valide.
-8. Afficher la couleur du mode ou du défaut prioritaire.
+Nous gardons les historiques et les réglages dans des variables statiques pour les conserver entre deux passages dans la boucle. Les tableaux ont une taille fixe. Les fonctions de traitement reçoivent l'adresse des structures à modifier, ce qui évite de recopier toutes les données.
 
-## Points à faire valider
+Pour calculer une moyenne, nous gardons la somme des valeurs. Quand le tableau est plein, la nouvelle mesure remplace la plus ancienne : nous retirons l'ancienne valeur de la somme et ajoutons la nouvelle. Il n'est donc pas nécessaire de décaler le tableau.
 
-Le PDF se contredit sur le rouge maintenu cinq secondes en économique. Le choix livré suit le paragraphe économique : rouge retourne au standard. L'autre règle est disponible par une constante de compilation et doit être arrêtée par le tuteur.
+## Gestion des modes
 
-Le [PDF des modes de fonctionnement](https://scenari.cesi.fr/scenari/cas/IDB_105_CPI_A2_Informatique___S3E_26_27_Septembre_Etudiant_FR/res/A2_-_Projet_Systeme_embarque_-_Modes_de_fonctionnement.pdf), page 2, section « Mode configuration », mentionne les paramètres « enregistrés dans l'EEPROM ». La liste du matériel de la page Projet ne mentionne pas de module EEPROM et le PDF n'impose ni un composant externe ni une référence. L'AT24C32 est le choix technique de l'implémentation actuelle, pas une référence exigée par CESI. Ce composant n'a pas été identifié dans le montage ; la solution de persistance adaptée au matériel fourni reste à établir et à valider.
+Nous utilisons une énumération `Mode` pour représenter les quatre états de la station.
+
+| Mode | Fonctionnement prévu |
+|---|---|
+| Standard | Lire les capteurs à l'intervalle choisi et enregistrer les mesures sur SD |
+| Configuration | Traiter les commandes série et régler les paramètres, sans acquisition |
+| Maintenance | Afficher les mesures sur la console, sans écrire sur SD |
+| Économique | Doubler l'intervalle entre les mesures et utiliser le GPS un cycle sur deux |
+
+La fonction `mode_apres_appui` détermine le changement de mode. La boucle de la station mesure la durée des appuis et applique ce changement. Elle utilise aussi le mode et les erreurs détectées pour choisir la couleur de la LED.
+
+## Déroulement du programme
+
+Au démarrage, nous initialisons les périphériques et chargeons les paramètres sauvegardés. Si aucun réglage valide n'est disponible, nous utilisons les valeurs par défaut du sujet. L'état du bouton rouge détermine ensuite si la station démarre en standard ou en configuration.
+
+La boucle principale répète les étapes suivantes :
+
+1. Lire les boutons et les commandes reçues sur la console.
+2. Vérifier si un changement de mode est demandé.
+3. Hors configuration, commencer une acquisition lorsque l'intervalle est écoulé.
+4. Lire les capteurs, la RTC et le GPS. En cas de timeout, indiquer `NA` pour la donnée manquante.
+5. Ajouter les mesures valides dans les historiques et calculer les moyennes.
+6. Préparer une ligne avec la date, l'heure et les mesures. En standard ou en économique, l'enregistrer sur SD si l'horodatage est valide.
+7. Mettre à jour la LED selon le mode ou l'erreur détectée.
+
+Les délais sont suivis avec `HAL_GetTick`. Nous séparons le début d'une acquisition de sa fin pour continuer à traiter les boutons et la console pendant l'attente des mesures.
+
+## Points restant à préciser
+
+Le sujet donne deux indications différentes pour un appui long sur le rouge en mode économique : retour en standard ou passage en maintenance. Nous retenons pour l'instant le retour en standard, indiqué dans le paragraphe du mode économique. Nous devons faire confirmer ce point par le tuteur.
+
+Le PDF des modes, page 2, indique une sauvegarde des paramètres en EEPROM, mais la liste du matériel ne précise pas de module pour cette fonction. Nous séparons donc la sauvegarde dans `eeprom.c`. Le pilote actuel prévoit une AT24C32 ; ce modèle est un choix technique et n'est pas imposé par le sujet. La solution de sauvegarde reste à valider avec le matériel disponible.
