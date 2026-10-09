@@ -26,6 +26,7 @@ Sous Linux, si ST-LINK est détecté mais que la configuration USB échoue, `./s
 ## Documents
 
 - [Livrable 2 : architecture](docs/LIVRABLE_2_ARCHITECTURE.md)
+- [Livrable 2 : version PDF](output/pdf/LIVRABLE_2_ARCHITECTURE.pdf)
 - [Livrable 3 : scénario de démonstration](docs/LIVRABLE_3_DEMONSTRATION.md)
 - [Livrable 4 : documentation technique et câblage](docs/LIVRABLE_4_TECHNIQUE.md)
 - [Livrable 4 : guide utilisateur](docs/LIVRABLE_4_UTILISATEUR.md)
