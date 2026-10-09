@@ -45,6 +45,8 @@ Le GPS ne doit pas occuper le connecteur UART du shield relié à la console ST-
 
 Victor confirme un Seeed Studio SD Card Shield v4.4 (04/01/2022). La [notice Seeed de la famille V4](https://wiki.seeedstudio.com/SD_Card_shield_V4.0/) indique D4 pour CS, D11 pour les données vers la SD, D12 pour les données depuis la SD et D13 pour l'horloge. Si ces signaux sont déjà reliés par les connecteurs empilés, aucun fil supplémentaire n'est nécessaire. L'ordre et l'alignement de l'empilement restent à vérifier sur le montage réel.
 
+Attention au routage réel : le [schéma Eagle constructeur de la v4.3](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) montre trois sélecteurs à pastilles `DI`, `DO`, `CLK`. Ils choisissent entre les signaux ICSP et D11/D12/D13. Le sujet CESI prévoit des fils depuis ICSP ; la présence de connecteurs Arduino ne prouve donc pas que le SPI y est déjà raccordé. La position de ces sélecteurs sur la v4.4 doit être identifiée physiquement avant de décider si des fils sont nécessaires. Ce contrôle de routage est distinct de l'échec de connexion USB observé même avec le lecteur vide.
+
 **Condition matérielle encore à résoudre :** l'EEPROM externe demandée par le PDF n'a pas été identifiée dans le montage. La version livrée ne remplace pas cette exigence par la SD ou la Flash. Sans EEPROM, les valeurs par défaut sont utilisables, mais les changements de paramètres sont refusés explicitement. Le réglage de la RTC reste possible.
 
 ## Architecture et notions du cours
