@@ -36,6 +36,8 @@ Traces : `verification/compilation.txt`, `verification/memoire-release.txt`. Les
 - Le débogueur a confirmé `SystemCoreClock=80000000`, l'initialisation du BME280 et l'absence de faute processeur dans la capture examinée.
 - La connexion USB a initialement échoué avec le montage complet, puis a fonctionné avec la Nucleo seule. Après ajout du support SD, la sortie série est devenue silencieuse ; le montage est en cours de vérification.
 - Victor confirme un Seeed Studio SD Card Shield v4.4, daté du 04/01/2022. Les signaux attendus sont D13/D12/D11 et CS sur D4 ; la notice de la famille V4 prévoit leur passage par les connecteurs Arduino. Aucun fil supplémentaire n'est nécessaire si cet empilement relie bien les broches. L'ordre et l'alignement des cartes restent à vérifier ; l'accès aux fichiers sur la SD réelle n'est pas encore validé.
+- Nouvel essai Nucleo → SD → Grove : erreur USB Linux `-71`, sans port série ni accès OpenOCD. Même erreur avec uniquement Nucleo → SD, carte mémoire retirée. Après retrait du shield SD, la Nucleo nue retrouve `/dev/ttyACM0` et l'accès ST-LINK. Ce contrôle situe le problème dans la présence du shield SD ou son montage, sans déterminer à lui seul la cause électrique exacte.
+- Programme complet Release téléversé sur la Nucleo nue et Flash vérifiée (`Verified OK`). Console : après une fin de ligne pour resynchroniser la réception, `VERSION` répond `3WW 1.0.0 LOT=CESI-2026 BUILD=1`. Le programme complet remplace désormais le diagnostic sur la carte.
 
 Les captures série et diagnostics bruts restent locaux afin de ne pas publier une éventuelle position GPS personnelle.
 
@@ -44,6 +46,7 @@ Les captures série et diagnostics bruts restent locaux afin de ne pas publier u
 - Valider les lectures RTC/BME280 avec leurs nouveaux pilotes sur le montage terminé, puis régler la date et l'heure.
 - Valider la luminosité physique, le sens des boutons et les couleurs LED.
 - Confirmer l'accès aux secteurs et fichiers de la SD réelle, puis montrer les archives et le remplacement en maintenance.
+- Examiner les connecteurs et points de contact du shield SD avant son prochain remontage ; une photographie du dessus et du dessous est nécessaire pour poursuivre ce diagnostic à distance sans supposer le brochage physique.
 - Obtenir une position GPS valide avec vue du ciel.
 - Ajouter/identifier une vraie EEPROM AT24C32, ou obtenir une clarification explicite du tuteur sur la mémoire persistante permise. La SD branchée ne résout pas automatiquement l'exigence EEPROM du PDF.
 - Faire arrêter par le tuteur la règle contradictoire d'appui rouge depuis économique.

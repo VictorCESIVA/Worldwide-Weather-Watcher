@@ -1,0 +1,23 @@
+Compte rendu du 9 octobre 2026 : programme complet sur Nucleo nue.
+Ces lignes sont des extraits observés, sans capture de position GPS.
+
+Commande depuis la racine du dépôt :
+openocd -f interface/stlink.cfg -f target/stm32l4x.cfg -c 'program .pio/build/release/firmware.elf verify reset exit'
+
+Extraits OpenOCD :
+Target voltage: 3.234098
+device idcode = 0x10076415 (STM32L47/L48xx - Rev 4 : 0x1007)
+flash size = 1024 KiB
+** Programming Finished **
+** Verify Started **
+** Verified OK **
+** Resetting Target **
+
+Console /dev/ttyACM0, 115200 bauds :
+Une première commande a été refusée avec « ERREUR : ligne trop longue. ».
+Après envoi d'une fin de ligne pour resynchroniser la réception :
+> VERSION
+3WW 1.0.0 LOT=CESI-2026 BUILD=1
+
+Limite : ce contrôle est réalisé sans shield ni capteurs. Il ne valide
+pas l'acquisition des mesures ni l'écriture sur la SD physique.
