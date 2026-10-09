@@ -5,7 +5,9 @@
 
 /*
  * Grove Chainable RGB LED :
- * - Port Grove D6 du shield
+ * - Signaux correspondant au port Grove D6 du shield
+ * - Module alimente en 5V, entree IN ; voir docs/TEST_LED.md.
+ *   Ne pas utiliser l'alimentation du Grove regle sur 3V3 pour ce module.
  * - Signal1=D6=PB10 → CIN (horloge P9813)
  * - Signal2=D7=PA8  → DIN (données P9813)
  */

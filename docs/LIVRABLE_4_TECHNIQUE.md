@@ -33,7 +33,7 @@ Couper l'alimentation avant de modifier le câblage. Le montage utilise Nucleo �
 | RTC Grove v2 PCF85063TP | I²C, adresse `0x51` | PB8 SCL, PB9 SDA |
 | EEPROM externe AT24C32 prévue | I²C, adresse `0x50`, A0/A1/A2 à 0, WP à 0 | PB8 SCL, PB9 SDA |
 | Luminosité | A2 | PA4, ADC1 canal 9 |
-| LED Chainable RGB P9813 | D6 | PB10 horloge, PA8 données |
+| LED Chainable RGB P9813 | Entrée IN, alimentation séparée 5V ; signaux D6/D7 | PB10 horloge, PA8 données |
 | Bouton rouge | Première ligne de **D8** | PA9, entrée active à 0 |
 | Bouton vert | Deuxième ligne de **D8** | PC7, entrée active à 0 |
 | GPS | A0 | PA0 réception UART4, PA1 émission ; échange RX/TX activé dans UART4 |
@@ -44,6 +44,12 @@ Couper l'alimentation avant de modifier le câblage. Le montage utilise Nucleo �
 | SD MISO | Blanc du câble Grove D4 → SD MISO | PB4, SPI1 AF5 |
 
 Le GPS reste sur A0 et le port UART du Grove reste libre pour la console ST-LINK. Les boutons sont déplacés sur D8 car D2/D3 servent à la SD. Leur initialisation ne modifie pas les GPIO du SPI. La LED embarquée PA5 n'est pas utilisée comme indicateur de la station ; l'indication repose sur le module RGB.
+
+### Alimentation et essai de la LED
+
+La [notice Seeed de la Chainable RGB LED](https://wiki.seeedstudio.com/Grove-Chainable_RGB_LED/) donne une alimentation de **5 V**, y compris pour la version 2 utilisant le P9813S14. L'entrée du module est **IN** (CI/DI), et OUT sert au module suivant. Le branchement direct sur D6 d'un Base Shield réglé sur 3V3, indiqué initialement, ne respecte pas cette alimentation. Le sélecteur Grove reste sur 3V3 pour l'entrée analogique de luminosité.
+
+Un [essai LED séparé](TEST_LED.md) utilise le quatrième adaptateur : rouge sur CN7-18 (+5V), noir sur CN7-20 (GND), jaune horloge sur CN10-25 (PB10), blanc données sur CN10-23 (PA8). Le lecteur SD est déconnecté pour cet essai ; aucun GPIO du programme ne change. Le résultat de l'essai et la distribution commune du 5V avec le lecteur SD restent à valider sur le montage final.
 
 ### Alimentation du lecteur SD
 

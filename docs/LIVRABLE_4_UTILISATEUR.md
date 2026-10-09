@@ -2,7 +2,7 @@
 
 ## Démarrer la station
 
-Utiliser le câblage de la documentation technique : météo et RTC sur I²C, GPS sur A0, luminosité sur A2, RGB sur D6 et double bouton sur **D8**. D2/D4 servent aux adaptateurs du lecteur SD. Le port UART du Grove reste libre. Couper l'USB avant de déplacer un module.
+Utiliser le câblage de la documentation technique : météo et RTC sur I²C, GPS sur A0, luminosité sur A2, RGB alimentée séparément en **5 V** avec ses signaux PB10/PA8 (D6/D7) et double bouton sur **D8**. Le Base Shield reste sur **3V3**. Voir [l'essai LED](TEST_LED.md) avant le premier contrôle des couleurs. D2/D4 servent aux adaptateurs du lecteur SD. Le port UART du Grove reste libre. Couper l'USB avant de déplacer un module.
 
 Mettre sous tension sans tenir de bouton pour démarrer en standard. La LED est verte. Une ligne contient la date et l'heure, la température, l'humidité, la pression, la luminosité, sa catégorie, puis la latitude et la longitude.
 

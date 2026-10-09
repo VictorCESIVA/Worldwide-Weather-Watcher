@@ -60,6 +60,10 @@ Traces : `verification/compilation-montage-grove.txt`, `verification/memoire-rel
 
 Les captures série et diagnostics bruts restent locaux afin de ne pas publier une éventuelle position GPS personnelle.
 
+### Reprise du test LED
+
+Victor signale une LED éteinte après la tentative de démarrage en configuration et confirme la référence **Chainable RGB LED 2.0**. La notice Seeed indique 5 V, alors que le branchement direct D6 précédemment communiqué utilisait le Grove réglé sur 3V3. La procédure est corrigée : essai séparé de la LED en 5 V sur l'entrée IN, en conservant PB10/PA8 et le Grove sur 3V3. Le lecteur SD est déconnecté pendant cet essai. Aucun résultat lumineux n'est encore disponible et le mode réellement atteint pendant la tentative précédente n'a pas été confirmé par le débogueur. Au début de cette reprise, ST-LINK apparaît dans `lsusb`, mais aucun port série n'est présent.
+
 ## Validation finale encore nécessaire
 
 - Valider les lectures RTC/BME280 avec leurs nouveaux pilotes sur le montage terminé, puis régler la date et l'heure.

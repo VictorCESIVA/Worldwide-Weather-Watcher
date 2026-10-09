@@ -2,7 +2,7 @@
 
 Programme C pour NUCLEO-L476RG, dérivé de la base imposée [ValentinMoraine/Worldwide-Weather-Watcher](https://github.com/ValentinMoraine/Worldwide-Weather-Watcher). Livrable 1 déjà rendu ; ce dépôt prépare les livrables 2, 3 et 4.
 
-Le matériel identifié est un capteur météo **BME280**, une **RTC Grove v2 PCF85063TP**, un GPS raccordé sur **A0**, un Grove Base Shield **v2.1** et un Seeed SD Card Shield **v4.4**. Le programme prévoit la luminosité sur **A2**, la LED RGB sur **D6** et les boutons sur **D8**. Les câbles Grove **D2/D4** servent au SPI du lecteur SD placé à côté. Les brochages complets et les validations restantes se trouvent dans la documentation technique.
+Le matériel identifié est un capteur météo **BME280**, une **RTC Grove v2 PCF85063TP**, un GPS raccordé sur **A0**, un Grove Base Shield **v2.1** et un Seeed SD Card Shield **v4.4**. Le programme prévoit la luminosité sur **A2**, les signaux LED RGB correspondant à **D6/D7** et les boutons sur **D8**. La **Chainable RGB LED 2.0 demande une alimentation séparée en 5 V** lorsque le Grove reste sur 3V3 : voir [l'essai LED](docs/TEST_LED.md). Les câbles Grove **D2/D4** servent au SPI du lecteur SD placé à côté. Les brochages complets et les validations restantes se trouvent dans la documentation technique.
 
 **Validation encore incomplète :** une EEPROM externe AT24C32 est prévue pour respecter la mémoire demandée dans le PDF, mais elle n'a pas été identifiée dans le montage. Le PDF se contredit également sur le rouge maintenu cinq secondes en économique : cette version choisit retour standard et documente l'alternative. Consulter le compte rendu de validation avant la démonstration.
 
