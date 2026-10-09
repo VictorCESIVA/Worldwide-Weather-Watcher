@@ -66,7 +66,7 @@ Les minima doivent rester inférieurs ou égaux aux maxima. Pour déplacer une p
 
 `HYGR_MINT` et `HYGR_MAXT` concernent **la température de l'air à laquelle l'humidité est prise en compte**. Ils ne sont pas des pourcentages d'humidité.
 
-Une modification réussie affiche `OK EEPROM`. Si l'EEPROM est absente ou inaccessible, la modification est refusée et les paramètres précédents sont conservés. La SD conserve les mesures ; l'EEPROM demandée pour les réglages est un autre composant. Les commandes d'horloge écrivent directement dans la RTC.
+Une modification réussie affiche `OK EEPROM`. Dans le firmware actuel, si l'AT24C32 est absente ou inaccessible, la modification est refusée et les paramètres précédents sont conservés. La SD conserve les mesures. Le PDF mentionne une sauvegarde des paramètres en EEPROM sans imposer de module externe ; la solution de persistance adaptée au matériel fourni reste à valider. Les commandes d'horloge écrivent directement dans la RTC.
 
 Les bornes techniques de cette version sont : intervalle de 1 à 35791 minutes, timeout de 1 à 4294967 secondes et taille de fichier de 1 à 2147483647 octets. Choisir une taille supérieure à une ligne complète, par exemple 2048 ou 4096 octets. Ces bornes protègent les calculs entiers ; le sujet ne fixe pas de maxima pour ces trois paramètres.
 

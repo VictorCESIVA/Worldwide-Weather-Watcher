@@ -4,7 +4,7 @@ La démonstration concerne la carte physique. Les tests logiciels automatisés l
 
 ## Conditions préalables
 
-Montage décrit dans la documentation technique, SD FAT16/FAT32 avec espace libre, RTC réglée, GPS avec position valide si l'on veut démontrer la géolocalisation, EEPROM AT24C32 pour démontrer la sauvegarde persistante des réglages. Le poste dispose de PlatformIO et de l'accès ST-LINK. L'absence d'EEPROM doit être résolue avant de présenter la configuration comme conforme.
+Montage décrit dans la documentation technique, SD FAT16/FAT32 avec espace libre, RTC réglée, GPS avec position valide si l'on veut démontrer la géolocalisation, sauvegarde persistante des réglages opérationnelle. Le pilote actuel cible une AT24C32 ; cette référence est un choix technique et n'est pas imposée par le sujet. Le poste dispose de PlatformIO et de l'accès ST-LINK. La solution de persistance adaptée au matériel fourni doit être validée avant de présenter la configuration comme conforme.
 
 1. Montrer la structure du dépôt issu de la base CESI et les documents des livrables.
 2. Exécuter `./scripts/projet.sh test`, puis `./scripts/projet.sh compile release`.

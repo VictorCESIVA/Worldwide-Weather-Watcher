@@ -73,7 +73,7 @@ La variante effectivement sélectionnée pour U2 dans le [fichier Eagle construc
 
 La [procédure SD](TEST_SD_GROVE.md) précise le câblage et le contrôle GPIO séparé. **État matériel :** le lecteur reste sans réponse CMD0 sur les deux chemins essayés. Une microSD de 8 Go est détectée comme FAT32 et montée par le lecteur du PC. L'écriture depuis la Nucleo n'est pas encore validée ; les sélecteurs et l'alimentation du shield restent à contrôler électriquement. L'accès USB a été rétabli par une réinitialisation ciblée de ST-LINK.
 
-**EEPROM encore à fournir :** l'AT24C32 demandée pour conserver les paramètres n'a pas été identifiée. Le programme ne remplace pas cette exigence par la SD ou la Flash. Sans EEPROM, les valeurs par défaut sont utilisables et les changements de paramètres sont refusés explicitement. Le réglage de la RTC reste possible.
+**Persistance des paramètres encore à valider :** le PDF mentionne l'EEPROM en page 2, mais n'impose ni module externe ni référence AT24C32. L'AT24C32 est le choix technique du pilote actuel et n'a pas été identifiée dans le montage. La solution adaptée au matériel fourni reste à établir. Le firmware actuel utilise les valeurs par défaut et refuse explicitement les changements de paramètres lorsque ce pilote ne peut pas sauvegarder. Le réglage de la RTC reste possible.
 
 ## Architecture et notions du cours
 

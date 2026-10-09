@@ -19,7 +19,7 @@ Les pages se réfèrent au PDF CESI « Mode de fonctionnement », cinq pages, ve
 | Intervalle 10 min, timeout 30 s | PDF p.2 | Paramètres par défaut | Test C |
 | Ligne horodatée, NA | PDF p.2 | Cycle, format huit champs | Boucle simulée + console réelle |
 | Limite 2 ko, fichiers AAMMJJ_0.LOG | PDF p.2 | FatFs, limite 2048, archives numérotées | Vrai FatFs sur image FAT16 |
-| Sauvegarde en EEPROM | PDF p.2 | AT24C32, deux copies et CRC | Simulation d'EEPROM ; composant absent à résoudre |
+| Sauvegarde en EEPROM | PDF p.2, sans référence ni module externe imposés | Choix actuel : AT24C32, deux copies et CRC | Simulation d'EEPROM ; solution adaptée au matériel fourni à valider |
 | Paramètres et RESET/VERSION | PDF p.2-4 | Validation et sauvegarde atomique au niveau applicatif | Tests domaines et refus |
 | TIMEOUT puis défaut après deux mesures | PDF p.3 | Deux timeouts consécutifs, succès remet à zéro | Test compteur + vraie boucle |
 | LUMIN et catégories | PDF p.3 | ADC 12 bits normalisé 10 bits, catégorie de la moyenne affichée, seuils inclusifs dans catégorie moyenne | Réaction physique au masquage + test de la vraie boucle au seuil bas |
@@ -39,4 +39,4 @@ Les pages se réfèrent au PDF CESI « Mode de fonctionnement », cinq pages, ve
 - Les moyennes utilisent dix mesures **réussies**, conformément au traitement optimisé étudié. Une erreur courante ne réutilise pas une ancienne valeur à la place de `NA`.
 - Une ligne est archivée avant d'être coupée par une limite de fichier ; la révision 0 reste le fichier d'écriture.
 - Sans date RTC valide, l'écriture est empêchée pour ne pas inventer un nom de fichier daté.
-- Aucun substitut à l'EEPROM et aucune règle contradictoire de bouton ne sont présentés comme une conformité définitive. Ces deux points doivent être résolus avant validation finale.
+- Le PDF mentionne l'EEPROM en page 2 ; il n'impose pas une AT24C32 externe. Cette référence est le choix actuel du pilote. La persistance sur le matériel fourni et la règle contradictoire de bouton restent à résoudre avant validation finale.

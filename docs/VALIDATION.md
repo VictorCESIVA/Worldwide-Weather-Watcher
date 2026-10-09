@@ -99,7 +99,7 @@ BUILD=4 est téléversé et **Verified OK** (`verification/flash-lumi.txt`). Apr
 - Confirmer l'accès aux secteurs et fichiers de la SD réelle, puis montrer les archives et le remplacement en maintenance.
 - Terminer l'essai du support SD séparé pour distinguer un problème de contacts mécaniques d'un problème d'alimentation ou de support, puis valider le routage SPI.
 - Obtenir une position GPS valide avec vue du ciel.
-- Ajouter/identifier une vraie EEPROM AT24C32, ou obtenir une clarification explicite du tuteur sur la mémoire persistante permise. La SD branchée ne résout pas automatiquement l'exigence EEPROM du PDF.
+- Valider la persistance des paramètres sur le matériel fourni. Le PDF mentionne l'EEPROM en page 2 sans imposer un module externe ni une AT24C32 ; cette référence est le choix technique du pilote actuel. La détection de la SD ne démontre pas à elle seule la sauvegarde des paramètres.
 - Faire arrêter par le tuteur la règle contradictoire d'appui rouge depuis économique.
 - Exécuter le scénario de démonstration et compléter la mesure de pile au pire cas.
 - Victor invitera lui-même les collaborateurs de son groupe.
