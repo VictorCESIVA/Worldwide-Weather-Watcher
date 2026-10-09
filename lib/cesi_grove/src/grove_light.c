@@ -31,6 +31,7 @@ void GroveLight_Init(void)
     hadc1.Init.OversamplingMode = DISABLE;
 
     HAL_ADC_Init(&hadc1);
+    HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
 
     ADC_ChannelConfTypeDef sConfig = {0};
     sConfig.Channel = LIGHT_ADC_CHANNEL;

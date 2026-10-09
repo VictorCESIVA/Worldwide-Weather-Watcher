@@ -1,20 +1,13 @@
-#include <stdio.h>
 #include "setup.h"
-#include "cesi_types.h"
-#include "grove_rgb.h"
-#include "grove_button.h"
-#include "grove_light.h"
-#include "grove_rtc_ds1307.h"
-#include "grove_gps_air530z.h"
-#include "grove_bme680.h"
-#include "sd_logger.h"
-
+#include "station.h"
+#include "stm32l4xx_hal.h"
 int main(void)
 {
     Global_Init();
-
+    station_init();
     while (1)
     {
-        
+        station_boucle();
+        HAL_Delay(1);
     }
 }

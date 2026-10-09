@@ -3,14 +3,14 @@
 #include "stm32l4xx_hal.h"
 #include <stdio.h>
 
-#define SD_CMD0     0
-#define SD_CMD1     1
-#define SD_CMD8     8
-#define SD_CMD55    55
-#define SD_CMD58    58
-#define SD_ACMD41   41
+#define SD_CMD0 0
+#define SD_CMD1 1
+#define SD_CMD8 8
+#define SD_CMD55 55
+#define SD_CMD58 58
+#define SD_ACMD41 41
 
-#define SD_R1_IDLE_STATE      0x01U
+#define SD_R1_IDLE_STATE 0x01U
 #define SD_R1_ILLEGAL_COMMAND 0x04U
 
 #define SD_INIT_TIMEOUT_MS 1000U
@@ -29,32 +29,32 @@ static SDLoggerCardType g_card_type = SDLOGGER_CARD_UNKNOWN;
 static SDLoggerInitStatus g_init_status = SDLOGGER_INIT_ERR_CMD0;
 static uint8_t g_active_cs_index = 0;
 
-static const SDChipSelect g_cs_candidates[] = {
-    {SD_CS_PORT, SD_CS_PIN, "D4/PB5"}
-};
+static const SDChipSelect g_cs_candidates[] = {{SD_CS_PORT, SD_CS_PIN, "D4/PB5"}};
 
 #define SD_CS_CANDIDATE_COUNT ((uint8_t)(sizeof(g_cs_candidates) / sizeof(g_cs_candidates[0])))
 
+static bool spi_erreur;
 static uint8_t SD_SPI_Transfer(uint8_t tx)
 {
     uint8_t rx = 0xFF;
-    (void)HAL_SPI_TransmitReceive(&SD_SPI_HANDLE, &tx, &rx, 1, 100);
+    if (spi_erreur)
+        return 0xFF;
+    if (HAL_SPI_TransmitReceive(&SD_SPI_HANDLE, &tx, &rx, 1, 20) != HAL_OK)
+        spi_erreur = true;
     return rx;
 }
 
 static void SD_Deselect(void)
 {
     HAL_GPIO_WritePin(g_cs_candidates[g_active_cs_index].port,
-                      g_cs_candidates[g_active_cs_index].pin,
-                      GPIO_PIN_SET);
+                      g_cs_candidates[g_active_cs_index].pin, GPIO_PIN_SET);
     (void)SD_SPI_Transfer(0xFF);
 }
 
 static void SD_Select(void)
 {
     HAL_GPIO_WritePin(g_cs_candidates[g_active_cs_index].port,
-                      g_cs_candidates[g_active_cs_index].pin,
-                      GPIO_PIN_RESET);
+                      g_cs_candidates[g_active_cs_index].pin, GPIO_PIN_RESET);
 }
 
 static void SD_SetActiveChipSelect(uint8_t index)
@@ -85,6 +85,7 @@ static bool SD_WaitReady(uint32_t timeout_ms)
 
 static uint8_t SD_SendCommand(uint8_t cmd, uint32_t arg, uint8_t crc)
 {
+    spi_erreur = false;
     uint8_t response = 0xFF;
     uint8_t frame[6];
     uint8_t i;
@@ -161,8 +162,8 @@ bool SDLogger_Init(void)
             idle_samples[i] = SD_SPI_Transfer(0xFF);
         }
         printf("[SD diag] MISO idle bytes: %02X %02X %02X %02X %02X %02X %02X %02X\r\n",
-               idle_samples[0], idle_samples[1], idle_samples[2], idle_samples[3],
-               idle_samples[4], idle_samples[5], idle_samples[6], idle_samples[7]);
+               idle_samples[0], idle_samples[1], idle_samples[2], idle_samples[3], idle_samples[4],
+               idle_samples[5], idle_samples[6], idle_samples[7]);
 
         r1 = 0xFFU;
         sample_count = 0U;
@@ -234,8 +235,7 @@ bool SDLogger_Init(void)
                 {
                     break;
                 }
-            }
-            while ((HAL_GetTick() - start) < SD_INIT_TIMEOUT_MS);
+            } while ((HAL_GetTick() - start) < SD_INIT_TIMEOUT_MS);
 
             if (r1 != 0x00U)
             {
@@ -282,8 +282,7 @@ bool SDLogger_Init(void)
                 g_init_status = SDLOGGER_INIT_OK;
                 return true;
             }
-        }
-        while ((HAL_GetTick() - start) < SD_INIT_TIMEOUT_MS);
+        } while ((HAL_GetTick() - start) < SD_INIT_TIMEOUT_MS);
 
         g_init_status = SDLOGGER_INIT_ERR_CMD1_TIMEOUT;
     }
@@ -316,16 +315,16 @@ static void SD_ReconfigPinsGPIO(void)
     SD_SPI_HANDLE.Instance->CR1 &= ~SPI_CR1_SPE;
 
     /* PA5 = SCK, PA7 = MOSI: push-pull outputs */
-    gpio.Pin   = GPIO_PIN_5 | GPIO_PIN_7;
-    gpio.Mode  = GPIO_MODE_OUTPUT_PP;
-    gpio.Pull  = GPIO_NOPULL;
+    gpio.Pin = GPIO_PIN_5 | GPIO_PIN_7;
+    gpio.Mode = GPIO_MODE_OUTPUT_PP;
+    gpio.Pull = GPIO_NOPULL;
     gpio.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOA, &gpio);
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); /* SCK idle low  */
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);   /* MOSI idle high */
 
     /* PA6 = MISO: input with pull-up */
-    gpio.Pin  = GPIO_PIN_6;
+    gpio.Pin = GPIO_PIN_6;
     gpio.Mode = GPIO_MODE_INPUT;
     gpio.Pull = GPIO_PULLUP;
     HAL_GPIO_Init(GPIOA, &gpio);
@@ -335,14 +334,14 @@ static void SD_ReconfigPinsSPI(void)
 {
     GPIO_InitTypeDef gpio = {0};
 
-    gpio.Pin       = GPIO_PIN_5 | GPIO_PIN_7;
-    gpio.Mode      = GPIO_MODE_AF_PP;
-    gpio.Pull      = GPIO_NOPULL;
-    gpio.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+    gpio.Pin = GPIO_PIN_5 | GPIO_PIN_7;
+    gpio.Mode = GPIO_MODE_AF_PP;
+    gpio.Pull = GPIO_NOPULL;
+    gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     gpio.Alternate = GPIO_AF5_SPI1;
     HAL_GPIO_Init(GPIOA, &gpio);
 
-    gpio.Pin  = GPIO_PIN_6;
+    gpio.Pin = GPIO_PIN_6;
     gpio.Pull = GPIO_PULLUP;
     HAL_GPIO_Init(GPIOA, &gpio);
 
@@ -356,10 +355,9 @@ static uint8_t SD_BitBangByte(uint8_t tx)
 
     for (bit = 0; bit < 8U; ++bit)
     {
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7,
-                          (tx & 0x80U) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, (tx & 0x80U) ? GPIO_PIN_SET : GPIO_PIN_RESET);
         tx <<= 1;
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);   /* rising edge  */
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); /* rising edge  */
         rx <<= 1;
         if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET)
         {
@@ -392,8 +390,8 @@ bool SDLogger_BitBangCMD0Test(void)
     {
         uint32_t idr_a = GPIOA->IDR;
         uint32_t idr_b = GPIOB->IDR;
-        printf("[SD bitbang] GPIOA IDR: SCK(5)=%lu MISO(6)=%lu MOSI(7)=%lu\r\n",
-               (idr_a >> 5U) & 1U, (idr_a >> 6U) & 1U, (idr_a >> 7U) & 1U);
+        printf("[SD bitbang] GPIOA IDR: SCK(5)=%lu MISO(6)=%lu MOSI(7)=%lu\r\n", (idr_a >> 5U) & 1U,
+               (idr_a >> 6U) & 1U, (idr_a >> 7U) & 1U);
         printf("[SD bitbang] GPIOB IDR: CS(5)=%lu\r\n", (idr_b >> 5U) & 1U);
     }
 
@@ -407,8 +405,7 @@ bool SDLogger_BitBangCMD0Test(void)
     }
 
     /* MISO state just before CMD0 */
-    printf("[SD bitbang] MISO before CMD0: %d\r\n",
-           HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6));
+    printf("[SD bitbang] MISO before CMD0: %d\r\n", HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6));
 
     /* CS low, send CMD0 */
     HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_RESET);
@@ -446,11 +443,135 @@ bool SDLogger_BitBangCMD0Test(void)
     return false;
 }
 
-bool SDLogger_WriteLine(const char *filename, const char *line)
+/* ---------- FatFs : secteurs SPI et fichiers ---------- */
+#include "ff.h"
+#include "diskio.h"
+#include "grove_rtc_ds1307.h"
+#include <string.h>
+static DSTATUS statut = STA_NOINIT;
+void SDLogger_Disconnect(void)
 {
-    (void)filename;
-    (void)line;
+    statut = STA_NOINIT;
+    SD_Deselect();
+}
 
-    /* File write support needs FatFs + diskio SPI. */
-    return false;
+DSTATUS disk_status(BYTE d)
+{
+    return d ? STA_NOINIT : statut;
+}
+DSTATUS disk_initialize(BYTE d)
+{
+    if (d)
+        return STA_NOINIT;
+    SD_SPI_HANDLE.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+    HAL_SPI_Init(&SD_SPI_HANDLE);
+    statut = SDLogger_Init() ? 0 : STA_NOINIT;
+    if (!statut && g_card_type == SDLOGGER_CARD_SDSC)
+    {
+        if (SD_SendCommand(16, 512, 1) != 0)
+            statut = STA_NOINIT;
+        SD_Deselect();
+    }
+    if (!statut)
+    {
+        SD_SPI_HANDLE.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+        HAL_SPI_Init(&SD_SPI_HANDLE);
+    }
+    return statut;
+}
+DRESULT disk_read(BYTE d, BYTE *buf, DWORD secteur, UINT count)
+{
+    if (d || !buf || !count)
+        return RES_PARERR;
+    if (statut)
+        return RES_NOTRDY;
+    for (UINT n = 0; n < count; ++n)
+    {
+        uint32_t adresse = g_card_type == SDLOGGER_CARD_SDHC ? secteur + n : (secteur + n) * 512;
+        if (SD_SendCommand(17, adresse, 1) != 0)
+        {
+            SD_Deselect();
+            return RES_ERROR;
+        }
+        uint32_t debut = HAL_GetTick();
+        uint8_t jeton;
+        do
+        {
+            jeton = SD_SPI_Transfer(255);
+        } while (jeton == 255 && HAL_GetTick() - debut < 200);
+        if (jeton != 0xFE)
+        {
+            SD_Deselect();
+            return RES_ERROR;
+        }
+        for (unsigned i = 0; i < 512; ++i)
+            buf[n * 512 + i] = SD_SPI_Transfer(255);
+        SD_SPI_Transfer(255);
+        SD_SPI_Transfer(255);
+        SD_Deselect();
+        if (spi_erreur)
+            return RES_ERROR;
+    }
+    return RES_OK;
+}
+DRESULT disk_write(BYTE d, const BYTE *buf, DWORD secteur, UINT count)
+{
+    if (d || !buf || !count)
+        return RES_PARERR;
+    if (statut)
+        return RES_NOTRDY;
+    for (UINT n = 0; n < count; ++n)
+    {
+        uint32_t adresse = g_card_type == SDLOGGER_CARD_SDHC ? secteur + n : (secteur + n) * 512;
+        if (SD_SendCommand(24, adresse, 1) != 0)
+        {
+            SD_Deselect();
+            return RES_ERROR;
+        }
+        SD_SPI_Transfer(255);
+        SD_SPI_Transfer(0xFE);
+        for (unsigned i = 0; i < 512; ++i)
+            SD_SPI_Transfer(buf[n * 512 + i]);
+        SD_SPI_Transfer(255);
+        SD_SPI_Transfer(255);
+        uint8_t r = SD_SPI_Transfer(255);
+        bool ok = (r & 31) == 5 && SD_WaitReady(500);
+        SD_Deselect();
+        if (!ok)
+            return RES_ERROR;
+    }
+    return RES_OK;
+}
+DRESULT disk_ioctl(BYTE d, BYTE cmd, void *buf)
+{
+    if (d)
+        return RES_PARERR;
+    if (statut)
+        return RES_NOTRDY;
+    if (cmd == CTRL_SYNC)
+    {
+        SD_Select();
+        bool ok = SD_WaitReady(500);
+        SD_Deselect();
+        return ok ? RES_OK : RES_ERROR;
+    }
+    if (cmd == GET_SECTOR_SIZE && buf)
+    {
+        *(WORD *)buf = 512;
+        return RES_OK;
+    }
+    if (cmd == GET_BLOCK_SIZE && buf)
+    {
+        *(DWORD *)buf = 1;
+        return RES_OK;
+    }
+    return RES_PARERR; /* Le formatage n'est jamais propose par le programme. */
+}
+DWORD get_fattime(void)
+{
+    RTC_DateTime t;
+    if (!GroveRTC_GetDateTime(&t))
+        return 0;
+    return ((DWORD)(t.year - 1980) << 25) | ((DWORD)t.month << 21) | ((DWORD)t.day << 16) |
+           ((DWORD)t.hours << 11) | ((DWORD)t.minutes << 5) | (t.seconds / 2);
 }

@@ -8,25 +8,27 @@ UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart4;
 
 /**
-  * @brief Fonction de transmission du moniteur série (implicitement appelée lors d'un printf)
-  */
+ * @brief Fonction de transmission du moniteur série (implicitement appelée lors d'un printf)
+ */
 int _write(int file, char *ptr, int len)
 {
-    HAL_UART_Transmit(&huart2, (uint8_t *)ptr, len, HAL_MAX_DELAY);
+    (void)file;
+    if (HAL_UART_Transmit(&huart2, (uint8_t *)ptr, len, 1000) != HAL_OK)
+        return -1;
     return len;
 }
 
 /**
-  * @brief Timer interne de la carte
-  */
+ * @brief Timer interne de la carte
+ */
 void SysTick_Handler(void)
 {
     HAL_IncTick();
 }
 
 /**
-  * @brief Initialisation I2C
-  */
+ * @brief Initialisation I2C
+ */
 static void MX_I2C1_Init(void)
 {
     __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -55,8 +57,8 @@ static void MX_I2C1_Init(void)
 }
 
 /**
-  * @brief Initialisation SPI
-  */
+ * @brief Initialisation SPI
+ */
 static void MX_SPI1_Init(void)
 {
     __HAL_RCC_GPIOA_CLK_ENABLE();
@@ -71,7 +73,8 @@ static void MX_SPI1_Init(void)
     gpio.Alternate = GPIO_AF5_SPI1;
     HAL_GPIO_Init(GPIOA, &gpio);
 
-    gpio.Pin = GPIO_PIN_6; // PA6 MISO — pull-up requis : la carte relâche MISO (haute-Z) quand CS est haut
+    gpio.Pin =
+        GPIO_PIN_6; // PA6 MISO — pull-up requis : la carte relâche MISO (haute-Z) quand CS est haut
     gpio.Mode = GPIO_MODE_AF_PP;
     gpio.Pull = GPIO_PULLUP;
     gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -103,38 +106,41 @@ static void MX_SPI1_Init(void)
 }
 
 /**
-  * @brief Initialisation de l'horloge
-  */
+ * @brief Initialisation de l'horloge
+ */
 void SystemClock_Config(void)
 {
     RCC_OscInitTypeDef osc = {0};
     RCC_ClkInitTypeDef clk = {0};
-
+    __HAL_RCC_PWR_CLK_ENABLE();
     HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
-
-    osc.OscillatorType = RCC_OSCILLATORTYPE_MSI;
-    osc.MSIState = RCC_MSI_ON;
-    osc.MSIClockRange = RCC_MSIRANGE_6;
-    osc.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;
-
-    HAL_RCC_OscConfig(&osc);
-
-    clk.ClockType = RCC_CLOCKTYPE_HCLK |
-                    RCC_CLOCKTYPE_SYSCLK |
-                    RCC_CLOCKTYPE_PCLK1 |
-                    RCC_CLOCKTYPE_PCLK2;
-
-    clk.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;
+    osc.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+    osc.HSIState = RCC_HSI_ON;
+    osc.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    osc.PLL.PLLState = RCC_PLL_ON;
+    osc.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+    osc.PLL.PLLM = 1;
+    osc.PLL.PLLN = 10;
+    osc.PLL.PLLP = RCC_PLLP_DIV7;
+    osc.PLL.PLLQ = RCC_PLLQ_DIV2;
+    osc.PLL.PLLR = RCC_PLLR_DIV2;
+    if (HAL_RCC_OscConfig(&osc) != HAL_OK)
+        while (1)
+            ;
+    clk.ClockType =
+        RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    clk.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     clk.AHBCLKDivider = RCC_SYSCLK_DIV1;
     clk.APB1CLKDivider = RCC_HCLK_DIV1;
     clk.APB2CLKDivider = RCC_HCLK_DIV1;
-
-    HAL_RCC_ClockConfig(&clk, FLASH_LATENCY_0);
+    if (HAL_RCC_ClockConfig(&clk, FLASH_LATENCY_4) != HAL_OK)
+        while (1)
+            ;
 }
 
 /**
-  * @brief Initialisations des ports UART et de la communication série
-  */
+ * @brief Initialisations des ports UART et de la communication série
+ */
 void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -181,10 +187,10 @@ static void MX_USART2_UART_Init(void)
 
     if (HAL_UART_Init(&huart2) != HAL_OK)
     {
-        while (1);
+        while (1)
+            ;
     }
 }
-
 
 void Global_Init(void)
 {

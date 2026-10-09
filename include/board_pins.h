@@ -9,19 +9,19 @@
  * - Signal1=D6=PB10 → CIN (horloge P9813)
  * - Signal2=D7=PA8  → DIN (données P9813)
  */
-#define RGB_DATA_PORT   GPIOA
-#define RGB_DATA_PIN    GPIO_PIN_8
+#define RGB_DATA_PORT GPIOA
+#define RGB_DATA_PIN GPIO_PIN_8
 
-#define RGB_CLK_PORT    GPIOB
-#define RGB_CLK_PIN     GPIO_PIN_10
+#define RGB_CLK_PORT GPIOB
+#define RGB_CLK_PIN GPIO_PIN_10
 
 /*
  * Grove Light Sensor v1.3
  * Port Grove A2 du shield (PA4 = ADC1_IN9).
  */
-#define LIGHT_ADC_CHANNEL  ADC_CHANNEL_9
-#define LIGHT_GPIO_PORT    GPIOA
-#define LIGHT_GPIO_PIN     GPIO_PIN_4
+#define LIGHT_ADC_CHANNEL ADC_CHANNEL_9
+#define LIGHT_GPIO_PORT GPIOA
+#define LIGHT_GPIO_PIN GPIO_PIN_4
 
 /*
  * Grove Dual Button v1.0
@@ -29,10 +29,10 @@
  * À adapter selon le port choisi et le mapping réel.
  */
 #define BUTTON1_PORT GPIOA
-#define BUTTON1_PIN  GPIO_PIN_10
+#define BUTTON1_PIN GPIO_PIN_10
 
 #define BUTTON2_PORT GPIOB
-#define BUTTON2_PIN  GPIO_PIN_3
+#define BUTTON2_PIN GPIO_PIN_3
 
 /*
  * Grove GPS Air530Z
@@ -47,11 +47,11 @@
 #define GROVE_I2C_HANDLE hi2c1
 
 /*
- * SD Card Shield Seeed v4.3
+ * SD Card Shield Seeed v4.4 (famille v4)
  * SPI Arduino : D11/D12/D13 et CS sur D4.
  */
 #define SD_CS_PORT GPIOB
-#define SD_CS_PIN  GPIO_PIN_5
+#define SD_CS_PIN GPIO_PIN_5
 
 #define SD_SPI_HANDLE hspi1
 

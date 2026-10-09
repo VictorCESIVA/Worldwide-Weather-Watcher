@@ -8,7 +8,7 @@ void GroveButton_Init(void)
 
     GPIO_InitTypeDef gpio = {0};
     gpio.Mode = GPIO_MODE_INPUT;
-    gpio.Pull = GPIO_PULLDOWN;
+    gpio.Pull = GPIO_PULLUP;
 
     gpio.Pin = BUTTON1_PIN;
     HAL_GPIO_Init(BUTTON1_PORT, &gpio);

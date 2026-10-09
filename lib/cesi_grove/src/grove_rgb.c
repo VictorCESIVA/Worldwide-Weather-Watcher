@@ -4,21 +4,20 @@
 static void GroveRGB_ClockPulse(void)
 {
     HAL_GPIO_WritePin(RGB_CLK_PORT, RGB_CLK_PIN, GPIO_PIN_RESET);
-    for (volatile int i = 0; i < 50; i++);
+    for (volatile int i = 0; i < 50; i++)
+        ;
 
     HAL_GPIO_WritePin(RGB_CLK_PORT, RGB_CLK_PIN, GPIO_PIN_SET);
-    for (volatile int i = 0; i < 50; i++);
+    for (volatile int i = 0; i < 50; i++)
+        ;
 }
 
 static void GroveRGB_SendByte(uint8_t value)
 {
     for (uint8_t i = 0; i < 8; i++)
     {
-        HAL_GPIO_WritePin(
-            RGB_DATA_PORT,
-            RGB_DATA_PIN,
-            (value & 0x80) ? GPIO_PIN_SET : GPIO_PIN_RESET
-        );
+        HAL_GPIO_WritePin(RGB_DATA_PORT, RGB_DATA_PIN,
+                          (value & 0x80) ? GPIO_PIN_SET : GPIO_PIN_RESET);
 
         GroveRGB_ClockPulse();
         value <<= 1;
@@ -33,12 +32,18 @@ static void GroveRGB_SendColor(uint8_t r, uint8_t g, uint8_t b)
      */
     uint8_t prefix = 0xC0;
 
-    if ((b & 0x80) == 0) prefix |= 0x20;
-    if ((b & 0x40) == 0) prefix |= 0x10;
-    if ((g & 0x80) == 0) prefix |= 0x08;
-    if ((g & 0x40) == 0) prefix |= 0x04;
-    if ((r & 0x80) == 0) prefix |= 0x02;
-    if ((r & 0x40) == 0) prefix |= 0x01;
+    if ((b & 0x80) == 0)
+        prefix |= 0x20;
+    if ((b & 0x40) == 0)
+        prefix |= 0x10;
+    if ((g & 0x80) == 0)
+        prefix |= 0x08;
+    if ((g & 0x40) == 0)
+        prefix |= 0x04;
+    if ((r & 0x80) == 0)
+        prefix |= 0x02;
+    if ((r & 0x40) == 0)
+        prefix |= 0x01;
 
     GroveRGB_SendByte(prefix);
     GroveRGB_SendByte(b);
@@ -66,9 +71,11 @@ void GroveRGB_Init(void)
 
 void GroveRGB_SetColor(uint8_t r, uint8_t g, uint8_t b)
 {
-    for (int i = 0; i < 4; i++) GroveRGB_SendByte(0x00);
+    for (int i = 0; i < 4; i++)
+        GroveRGB_SendByte(0x00);
     GroveRGB_SendColor(r, g, b);
-    for (int i = 0; i < 4; i++) GroveRGB_SendByte(0x00);
+    for (int i = 0; i < 4; i++)
+        GroveRGB_SendByte(0x00);
 }
 
 void GroveRGB_Off(void)
