@@ -39,6 +39,8 @@ Traces : `verification/compilation.txt`, `verification/memoire-release.txt`. Les
 - Vérification de l'archive Eagle officielle Seeed v4.3 : les sélecteurs DI/DO/CLK choisissent entre ICSP et D11/D12/D13. Le routage effectif sur la v4.4 n'est pas encore identifié. L'empilement ne suffit pas à prouver que les trois fils prévus par CESI sont inutiles ; une inspection physique est nécessaire.
 - Nouvel essai Nucleo → SD → Grove : erreur USB Linux `-71`, sans port série ni accès OpenOCD. Même erreur avec uniquement Nucleo → SD, carte mémoire retirée. Après retrait du shield SD, la Nucleo nue retrouve `/dev/ttyACM0` et l'accès ST-LINK. Ce contrôle situe le problème dans la présence du shield SD ou son montage, sans déterminer à lui seul la cause électrique exacte.
 - Programme complet Release téléversé sur la Nucleo nue et Flash vérifiée (`Verified OK`). Console : après une fin de ligne pour resynchroniser la réception, `VERSION` répond `3WW 1.0.0 LOT=CESI-2026 BUILD=1`. Le programme complet remplace désormais le diagnostic sur la carte.
+- Photos du dessus et du dessous du support reçues : connecteur ICSP bleu à six trous identifié, ainsi que les sélecteurs DI/DO/CLK. Les trois positions SPI sont repérées dans la documentation technique à partir du fichier Eagle officiel et de l'orientation des photos. La continuité électrique et la cause de l'échec USB ne peuvent pas être prouvées par ces photos.
+- Prochain essai demandé : support SD séparé de la Nucleo, sans carte mémoire, avec seulement les fils 5V et GND entre les broches portant ces inscriptions. Si l'USB fonctionne dans cette configuration, ajout ultérieur de CS et des trois signaux SPI. Aucun résultat de cet essai n'est encore disponible.
 
 Les captures série et diagnostics bruts restent locaux afin de ne pas publier une éventuelle position GPS personnelle.
 
@@ -47,7 +49,7 @@ Les captures série et diagnostics bruts restent locaux afin de ne pas publier u
 - Valider les lectures RTC/BME280 avec leurs nouveaux pilotes sur le montage terminé, puis régler la date et l'heure.
 - Valider la luminosité physique, le sens des boutons et les couleurs LED.
 - Confirmer l'accès aux secteurs et fichiers de la SD réelle, puis montrer les archives et le remplacement en maintenance.
-- Examiner les connecteurs et points de contact du shield SD avant son prochain remontage ; une photographie du dessus et du dessous est nécessaire pour poursuivre ce diagnostic à distance sans supposer le brochage physique.
+- Terminer l'essai du support SD séparé pour distinguer un problème de contacts mécaniques d'un problème d'alimentation ou de support, puis valider le routage SPI.
 - Obtenir une position GPS valide avec vue du ciel.
 - Ajouter/identifier une vraie EEPROM AT24C32, ou obtenir une clarification explicite du tuteur sur la mémoire persistante permise. La SD branchée ne résout pas automatiquement l'exigence EEPROM du PDF.
 - Faire arrêter par le tuteur la règle contradictoire d'appui rouge depuis économique.

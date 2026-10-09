@@ -47,6 +47,29 @@ Victor confirme un Seeed Studio SD Card Shield v4.4 (04/01/2022). La [notice See
 
 Attention au routage réel : le [schéma Eagle constructeur de la v4.3](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) montre trois sélecteurs à pastilles `DI`, `DO`, `CLK`. Ils choisissent entre les signaux ICSP et D11/D12/D13. Le sujet CESI prévoit des fils depuis ICSP ; la présence de connecteurs Arduino ne prouve donc pas que le SPI y est déjà raccordé. La position de ces sélecteurs sur la v4.4 doit être identifiée physiquement avant de décider si des fils sont nécessaires. Ce contrôle de routage est distinct de l'échec de connexion USB observé même avec le lecteur vide.
 
+Les photos fournies par Victor montrent le connecteur ICSP bleu à six trous sous le shield et les trois sélecteurs DI/DO/CLK. Repérage du connecteur **vu par-dessous, lecteur SD en haut et connecteur ICSP en bas**, comme sur sa deuxième photo :
+
+```text
+                    gauche       milieu       droite
+rangée du haut      non utilisé  MOSI         non utilisé
+rangée du bas       MISO         SCK          non utilisé
+```
+
+Pour les trois signaux : bas gauche → D12, bas milieu → D13, haut milieu → D11. Ce repérage ne s'applique pas à une vue de dessus : les positions seraient inversées. Le mapping a été recoupé avec les coordonnées des pastilles du fichier Eagle Seeed et le brochage ICSP Arduino. La continuité des sélecteurs de la v4.4 reste à confirmer par mesure ou par un échange SPI réussi.
+
+Pour isoler les contacts mécaniques de l'empilement, un essai à côté de la Nucleo est prévu, USB débranché pendant le câblage. Commencer avec uniquement 5V et GND, sur les longues rangées portant ces inscriptions, sans carte mémoire ; vérifier la connexion USB avant d'ajouter les signaux. Si ce premier essai fonctionne, le raccordement complet externe comporte six fils :
+
+| Support SD | Nucleo / broche accessible sur le shield Grove |
+|---|---|
+| 5V, rangée marquée 5V | 5V |
+| GND, rangée marquée GND | GND |
+| ICSP MOSI | D11 |
+| ICSP MISO | D12 |
+| ICSP SCK | D13 |
+| Broche Arduino 4 (CS) | D4 |
+
+Le support SD reste séparé pendant cet essai. Les trois autres broches ICSP ne sont pas raccordées ; leur fonction conventionnelle ne prouve pas qu'elles soient toutes routées sur ce shield. Ne pas employer VIN comme alimentation 5V. Cet essai n'a pas encore été réalisé : il ne prouve pas que le défaut USB est résolu.
+
 **Condition matérielle encore à résoudre :** l'EEPROM externe demandée par le PDF n'a pas été identifiée dans le montage. La version livrée ne remplace pas cette exigence par la SD ou la Flash. Sans EEPROM, les valeurs par défaut sont utilisables, mais les changements de paramètres sont refusés explicitement. Le réglage de la RTC reste possible.
 
 ## Architecture et notions du cours
