@@ -43,6 +43,7 @@ Traces : `verification/compilation.txt`, `verification/memoire-release.txt`. Les
 - Prochain essai demandé : support SD séparé de la Nucleo, sans carte mémoire, avec seulement les fils 5V et GND entre les broches portant ces inscriptions. Si l'USB fonctionne dans cette configuration, ajout ultérieur de CS et des trois signaux SPI. Aucun résultat de cet essai n'est encore disponible.
 - Victor indique ne pas avoir de fils Dupont. L'essai séparé et le raccordement ICSP sont donc actuellement impossibles. Il précise que le connecteur ICSP SD s'emboîte sur son Grove. Vérification du schéma officiel Grove Base Shield v2 : ce modèle ne relie pas les contacts ICSP MOSI/MISO/SCK aux nets D11/D12/D13. La référence du Grove de Victor reste à confirmer ; aucune liaison SPI fonctionnelle n'a été démontrée.
 - Une vérification des capteurs sans support SD a été proposée : BME280 et RTC sur I²C, GPS sur A0, UART Grove libre. Ce remontage n'est pas encore confirmé.
+- Victor confirme ensuite un Grove Base Shield **v2.1**. L'archive PCB officielle proposée sur la page Seeed est marquée **v2.0, 03/10/2014**. Elle ne constitue pas une preuve du routage de la v2.1 : la continuité ICSP vers D11/D12/D13 sur son exemplaire reste à vérifier. Le nom du shield Grove est maintenant identifié.
 
 Les captures série et diagnostics bruts restent locaux afin de ne pas publier une éventuelle position GPS personnelle.
 
