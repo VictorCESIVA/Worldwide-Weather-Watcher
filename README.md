@@ -21,6 +21,8 @@ Pour déboguer : `./scripts/projet.sh compile debug`. Pour tester les connexions
 
 Le test isolé `./scripts/projet.sh diagnostic-sd` utilise un câblage différent, réservé au lecteur SD posé à côté de la carte. Suivre [sa procédure de câblage](docs/TEST_SD_GROVE.md) avant de l'utiliser. Ce diagnostic ne constitue pas la station complète.
 
+Sous Linux, si ST-LINK est détecté mais que la configuration USB échoue, `./scripts/projet.sh usb-reset` peut relancer son énumération. Cette récupération a rétabli la connexion sur le poste sans déplacer de fil ; elle ne modifie pas le firmware.
+
 ## Documents
 
 - [Livrable 2 : architecture](docs/LIVRABLE_2_ARCHITECTURE.md)

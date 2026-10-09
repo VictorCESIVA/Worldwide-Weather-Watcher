@@ -53,11 +53,11 @@ Les photos fournies par Victor montrent le connecteur ICSP bleu à six trous sou
 
 ```text
                     gauche       milieu       droite
-rangée du haut      non utilisé  MOSI         non utilisé
-rangée du bas       MISO         SCK          non utilisé
+rangée du haut      MISO         SCK          non utilisé
+rangée du bas       non utilisé  MOSI         non utilisé
 ```
 
-Pour les trois signaux : bas gauche → D12, bas milieu → D13, haut milieu → D11. Ce repérage ne s'applique pas à une vue de dessus : les positions seraient inversées. Le mapping a été recoupé avec les coordonnées des pastilles du fichier Eagle Seeed et le brochage ICSP Arduino. La continuité des sélecteurs de la v4.4 reste à confirmer par mesure ou par un échange SPI réussi.
+Pour le profil SPI initial : haut gauche → D12, haut milieu → D13, bas milieu → D11. Ce repérage ne s'applique pas à une vue de dessus : gauche et droite sont inversées. **Correction du 09/10/2026 :** le premier repérage utilisait une autre variante du connecteur incluse dans la bibliothèque Eagle. La variante effectivement sélectionnée pour U2 est `'WITH/-SILK'` : MISO = pastille 33, SCK = 34, MOSI = 37. Ces affectations ont été vérifiées à la fois dans les connexions du schéma et dans les nets du fichier `.brd`. La continuité des sélecteurs de la v4.4 reste à confirmer par mesure ou par un échange SPI réussi.
 
 Pour isoler les contacts mécaniques de l'empilement, un essai à côté de la Nucleo est prévu, USB débranché pendant le câblage. Commencer avec uniquement 5V et GND, sur les longues rangées portant ces inscriptions, sans carte mémoire ; vérifier la connexion USB avant d'ajouter les signaux. Si ce premier essai fonctionne, le raccordement complet externe comporte six fils :
 

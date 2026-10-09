@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage : ./scripts/projet.sh [compile|upload|monitor|test|diagnostic|diagnostic-sd|memoire] [release|debug]
+# Usage : ./scripts/projet.sh [compile|upload|monitor|test|diagnostic|diagnostic-sd|usb-reset|memoire] [release|debug]
 set -euo pipefail
 cd "$(dirname "$0")/.."
 action=${1:-compile}
@@ -14,6 +14,7 @@ case "$action" in
  monitor) "$pio_cmd" device monitor -b 115200 ;;
  diagnostic) "$pio_cmd" run -e diagnostic -t upload ;;
  diagnostic-sd) "$pio_cmd" run -e diagnostic_sd_grove -t upload ;;
+ usb-reset) python3 scripts/reset_stlink_usb.py ;;
  test) ./scripts/test.sh ;;
  memoire) python3 scripts/memoire.py "$mode" ;;
  *) printf 'Action inconnue : %s\n' "$action" >&2; exit 1 ;;

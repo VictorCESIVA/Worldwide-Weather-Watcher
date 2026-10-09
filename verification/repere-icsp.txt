@@ -1,0 +1,17 @@
+09/10/2026 - Reperage ICSP, variante effectivement choisie dans le schema Seeed v4.3.
+Source : https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip
+Composant U2, device='WITH/-SILK'
+
+GND -> pad 36
+MISO -> pad 33
+MOSI -> pad 37
+RST -> pad 35
+SCK -> pad 34
+VCC -> pad 38
+
+DI_A : [('DI', '00'), ('U2', '37')]
+CLK_A : [('CLK', '00'), ('U2', '34')]
+DO_A : [('DO', '11'), ('U2', '33')]
+CLK_B : [('CLK', '11'), ('U2', '14')]
+DO_B : [('DO', '00'), ('U2', '13')]
+DI_B : [('DI', '11'), ('U2', '12')]

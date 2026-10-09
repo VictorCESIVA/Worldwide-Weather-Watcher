@@ -38,13 +38,17 @@ Repérage **vu de dessus, logement SD en haut, connecteur ICSP en bas**, comme s
 
 ```text
                     gauche       milieu       droite
-rangée du haut      non utilisé  MOSI         non utilisé
-rangée du bas       non utilisé  SCK          MISO
+rangée du haut      non utilisé  SCK          MISO
+rangée du bas       non utilisé  MOSI         non utilisé
 ```
 
-La vue par-dessous inverse gauche et droite. Seuls ces trois contacts ICSP sont utilisés. Le repérage vient des coordonnées du [fichier Eagle Seeed v4.3](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) et des photos ; la continuité des sélecteurs DI/DO/CLK sur l'exemplaire v4.4 reste à confirmer. Si le lecteur ne répond pas, vérifier cette continuité avant de conclure à une panne du logiciel.
+La vue par-dessous inverse gauche et droite. Seuls ces trois contacts ICSP sont utilisés. Le repérage vient de la variante **effectivement choisie** pour U2 dans le [fichier Eagle Seeed v4.3](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) : `'WITH/-SILK'`, pastilles 33 MISO, 34 SCK, 37 MOSI. Le premier plan communiqué utilisait une autre variante de cette bibliothèque et était erroné ; ce dessin le corrige. La continuité des sélecteurs DI/DO/CLK sur l'exemplaire v4.4 reste à confirmer. Si le lecteur ne répond pas, vérifier cette continuité avant de conclure à une panne du logiciel.
 
 Les signaux PB3/PB4/PB5 possèdent la fonction SPI1 en AF5 dans la [fiche technique STM32L476](https://www.st.com/resource/en/datasheet/stm32l476re.pdf). Le programme emploie ce SPI matériel. Les boutons normalement sur D2 doivent rester débranchés pendant ce test.
+
+### Autre chemin de routage du lecteur
+
+Le fichier constructeur relie la position A des sélecteurs à ICSP, et la position B aux broches Arduino 11/12/13. Sans souder ni changer le programme, un contrôle de ce second chemin consiste à débrancher l'USB, déplacer le blanc D2 vers la broche latérale SD **13**, le jaune D4 vers **11** et le blanc D4 vers **12**, puis reconnecter l'USB. Le jaune D2 reste sur **4** et l'alimentation reste identique. La réussite sur ce chemin identifierait le routage utilisable ; l'absence de réponse sur les deux chemins exige un contrôle électrique du lecteur et/ou de la carte mémoire. Il ne faut pas déplacer les sélecteurs par soudure sans avoir identifié la révision réelle et mesuré les continuités.
 
 ## Programme et résultat attendu
 
@@ -52,6 +56,12 @@ Le diagnostic se compile avec `pio run -e diagnostic_sd_grove`. Le téléverser 
 
 Le programme tente l'initialisation, monte FatFs, choisit le premier nom libre entre `3WWT000.LOG` et `3WWT999.LOG`, écrit `3WW test SD` suivi de CR/LF (13 octets), synchronise, ferme et relit le fichier. `FA_CREATE_NEW` protège les fichiers déjà présents. La réussite exige `init=1`, `montee=1`, `ecriture=1`, `relecture=1`, `test=1`. Un fichier partiel peut rester en cas d'échec ; il n'est pas effacé automatiquement.
 
-Si la console ne fonctionne pas, la sonde peut lire `diag_sd_init`, `diag_sd_statut`, `diag_sd_montage`, `diag_sd_ecriture` et `diag_sd_lecture`. Le bouton RESET relance un essai et peut créer un nouveau fichier. Après le diagnostic, le programme `release` exige à nouveau son propre brochage décrit dans la documentation technique. Ce câblage D2/D4 n'est pas encore un profil de station complète.
+Si la console ne fonctionne pas, la sonde peut lire `diag_sd_init`, `diag_sd_statut`, `diag_sd_montage`, `diag_sd_ecriture` et `diag_sd_lecture`. Après un échec d'initialisation, le diagnostic compare aussi CMD0 en pilotant directement les mêmes GPIO, avec une horloge plafonnée à 200 kHz par le compteur de cycles du Cortex-M4. `diag_sd_cmd0_gpio` expose le résultat ; ce test n'est pas compilé dans la station. Le bouton RESET relance un essai et peut créer un nouveau fichier. Après le diagnostic, le programme `release` exige à nouveau son propre brochage décrit dans la documentation technique. Ce câblage D2/D4 n'est pas encore un profil de station complète.
 
-État au 09/10/2026 : compilation et téléversement vérifiés ; exécution confirmée par GDB sans lecteur raccordé. L'alimentation séparée seule, sans carte mémoire, laisse le port USB présent et la cible accessible par ST-LINK. Après confirmation des quatre signaux raccordés et de la carte mémoire insérée, l'erreur de configuration USB `-71` réapparaît. Après confirmation du retrait de la carte mémoire, le port série et la sonde restent inaccessibles dans la capture ; le journal ne montre pas de nouvelle énumération. Le câblage doit être contrôlé visuellement. Aucune écriture/relecture physique n'a encore été validée.
+## Récupération de la connexion USB sous Linux
+
+Si Linux détecte ST-LINK mais laisse sa configuration USB vide (`can't set config #1, error -71`), une réinitialisation ciblée peut relancer son énumération : `./scripts/projet.sh usb-reset`. Ce script vise uniquement un périphérique ST-LINK/V2.1 `0483:374b`, refuse plusieurs sondes et emploie `USBDEVFS_RESET`. Il ne modifie pas le firmware et ne change aucun réglage permanent du PC. Les permissions USB doivent déjà autoriser l'utilisateur, comme pour OpenOCD.
+
+Cette opération a rétabli `/dev/ttyACM0` et l'accès OpenOCD sur le montage, sans déplacer de fil. Elle ne démontre pas l'origine exacte de l'échec initial. La [documentation Linux](https://cdn.kernel.org/doc/html/latest/driver-api/usb/error-codes.html) traite `EPROTO` comme une erreur de protocole USB ; elle ne suffit pas à attribuer une faute au câblage du projet.
+
+État au 09/10/2026 : compilation et téléversement vérifiés. L'accès USB et la console sont rétablis après réinitialisation ciblée de ST-LINK, sans déplacement de fil. Le repérage ICSP initial était erroné ; il est corrigé dans ce document et Victor confirme les trois contacts déplacés. Le diagnostic SPI matériel et son contrôle par GPIO reçoivent encore `FF` à CMD0. Victor confirme une carte de 8 Go ; le test du chemin latéral 11/12/13 est demandé. Le routage DI/DO/CLK et le lecteur restent à contrôler. Aucune écriture/relecture physique n'a encore été validée.

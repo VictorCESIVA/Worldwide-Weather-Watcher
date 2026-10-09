@@ -4,16 +4,93 @@
  */
 #include "setup.h"
 #include "stm32l4xx_hal.h"
+#include "board_pins.h"
 #include "sd_logger.h"
 #include "ff.h"
 #include <stdio.h>
 #include <string.h>
 
+extern SPI_HandleTypeDef SD_SPI_HANDLE;
 static FIL fichier;
 static FILINFO information;
 volatile bool diag_sd_init, diag_sd_montage, diag_sd_ecriture, diag_sd_lecture;
+volatile bool diag_sd_cmd0_gpio;
 volatile int diag_sd_statut;
 static char nom[16];
+
+/* Comparaison reservee au diagnostic : memes contacts, sans SPI1.
+ * Le compteur de cycles du Cortex-M4 impose au moins 2,5 us par demi-periode
+ * (horloge au plus 200 kHz). Il ne sert pas dans le programme de la station.
+ */
+static void pause_spi(void)
+{
+    uint32_t debut = DWT->CYCCNT;
+    while ((uint32_t)(DWT->CYCCNT - debut) < SystemCoreClock / 400000U)
+        ;
+}
+
+static uint8_t octet_gpio(uint8_t sortie)
+{
+    uint8_t entree = 0;
+    for (unsigned int bit = 0; bit < 8; ++bit)
+    {
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5,
+                          (sortie & 0x80U) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+        sortie <<= 1;
+        pause_spi();
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+        pause_spi();
+        entree = (uint8_t)((entree << 1) |
+                          (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_SET));
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+    }
+    return entree;
+}
+
+static bool tester_cmd0_gpio(void)
+{
+    __HAL_SPI_DISABLE(&SD_SPI_HANDLE);
+    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+
+    GPIO_InitTypeDef gpio = {0};
+    gpio.Pin = GPIO_PIN_3 | GPIO_PIN_5;
+    gpio.Mode = GPIO_MODE_OUTPUT_PP;
+    gpio.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOB, &gpio);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+    gpio.Pin = GPIO_PIN_4;
+    gpio.Mode = GPIO_MODE_INPUT;
+    gpio.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(GPIOB, &gpio);
+
+    HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_SET);
+    printf("GPIO CS haut=%d ", HAL_GPIO_ReadPin(SD_CS_PORT, SD_CS_PIN));
+    HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_RESET);
+    printf("bas=%d\r\n", HAL_GPIO_ReadPin(SD_CS_PORT, SD_CS_PIN));
+    HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_SET);
+    HAL_Delay(50);
+    for (unsigned int i = 0; i < 10; ++i)
+        (void)octet_gpio(0xFF);
+
+    HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_RESET);
+    const uint8_t commande[] = {0x40, 0, 0, 0, 0, 0x95};
+    for (unsigned int i = 0; i < sizeof commande; ++i)
+        (void)octet_gpio(commande[i]);
+    uint8_t reponse = 0xFF;
+    for (unsigned int i = 0; i < 10; ++i)
+    {
+        reponse = octet_gpio(0xFF);
+        if ((reponse & 0x80U) == 0)
+            break;
+    }
+    HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_SET);
+    (void)octet_gpio(0xFF);
+    printf("GPIO CMD0 reponse=%02X (attendu 01)\r\n", reponse);
+    /* Aucun acces fichier apres ce test. RESET restaure le SPI materiel. */
+    return reponse == 0x01;
+}
 
 static bool tester_fichier(void)
 {
@@ -74,6 +151,8 @@ int main(void)
         }
         SDLogger_Unmount();
     }
+    else
+        diag_sd_cmd0_gpio = tester_cmd0_gpio();
     printf("Fin du diagnostic. RESET pour refaire l'essai.\r\n");
     while (1)
         HAL_Delay(1000);
