@@ -10,7 +10,7 @@ Les pages se réfèrent au PDF CESI « Mode de fonctionnement », cinq pages, ve
 | Code complet, script, montage, scénario | Livrable 3 | Sources, scripts, tableau de câblage, scénario | Compilation + démonstration physique |
 | Documentation technique et utilisateur | Livrable 4 | Deux documents dédiés | Lecture |
 | Standard au démarrage | PDF p.1 | `station_init` | Boucle simulée, carte |
-| Configuration au démarrage rouge | PDF p.1 | Lecture bouton initial, acquisitions désactivées | Boucle simulée + test physique à terminer |
+| Configuration au démarrage rouge | PDF p.1 | Lecture bouton initial, acquisitions désactivées | Boucle simulée + démarrage rouge confirmé physiquement (BUILD=2) |
 | Retour après 30 minutes sans activité | PDF p.1 | `activite`, différence en millisecondes | Horloge simulée sur vraie boucle |
 | Maintenance, retour au précédent | PDF p.1 et p.5 | Mode mémorisé, démontage SD | Boucle simulée + physique |
 | Économique : intervalle x2, GPS un sur deux | PDF p.5 | Intervalle temporaire, compteur de cycles | Boucle simulée |
@@ -26,7 +26,7 @@ Les pages se réfèrent au PDF CESI « Mode de fonctionnement », cinq pages, ve
 | Température -40 à 85, seuils -10/60 | PDF p.3-4 | Types et validation avant conversion | Tests C |
 | Hygrométrie filtrée par température | PDF p.4 | `HYGR_MINT`, `HYGR_MAXT` | Boucle |
 | Pression 300-1100, seuils 850/1080 | PDF p.4 | Valeurs converties et bornées | Tests C |
-| CLOCK, DATE, DAY | PDF p.5 | Date réelle, BCD, jour explicite | Tests calendaires + RTC physique |
+| CLOCK, DATE, DAY | PDF p.5 | Date réelle, BCD, jour explicite ; dernier réglage gardé si relecture temporairement indisponible | Tests calendaires, vraie boucle en erreur de relecture, RTC physique après reset |
 | C modulaire, build et debug/release | Prosit 3 | PlatformIO, Bash, numéro de build | Compilation deux profils |
 | Structures et optimisation des mesures | Prosit 4 | `Capteur`, passage par adresse, somme conservée | 1000 insertions et bornes int16 |
 | Gestion mémoire et pile | Prosit 5 | État statique, sections ELF, fichiers `.su` | Rapport mémoire ; pic physique à mesurer |

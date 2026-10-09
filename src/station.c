@@ -21,6 +21,11 @@ static Parametres config;
 static Mode mode, precedent = STANDARD;
 static Capteur lumi, temp, humidite, pression;
 static RTC_DateTime date;
+/* Dernier reglage accepte, utilise seulement pendant la configuration.
+ * Les mesures horodatees restent issues d'une vraie lecture de la RTC.
+ */
+static RTC_DateTime reglage_rtc;
+static bool reglage_rtc_valide;
 static GPS_Data gps;
 static bool rtc_ok, gps_ok, env_fini, lumi_fini, rtc_fini, gps_fini, cycle, sd_montee;
 static uint8_t rtc_timeouts, gps_timeouts;
@@ -101,13 +106,15 @@ static void executer_commande(void)
              !strncmp(commande, "DAY=", 4))
     {
         RTC_DateTime d;
-        /* Si RTC vierge, base valide pour regler successivement date/heure/jour. */
+        /* Ne pas perdre DATE si la relecture entre deux commandes echoue. */
         if (!GroveRTC_GetDateTime(&d))
-            d = (RTC_DateTime){0, 0, 0, 1, 1, 1, 2000};
+            d = reglage_rtc_valide ? reglage_rtc : (RTC_DateTime){0, 0, 0, 1, 1, 1, 2000};
         if (!regler_rtc(&d, commande) || !GroveRTC_SetDateTime(&d))
             printf("ERREUR RTC ou format.\r\n");
         else
         {
+            reglage_rtc = d;
+            reglage_rtc_valide = true;
             rtc_ok = true;
             rtc_timeouts = 0;
             printf("OK RTC\r\n");
@@ -435,6 +442,7 @@ static void led(uint32_t maintenant)
 }
 void station_init(void)
 {
+    reglage_rtc_valide = false;
     GroveButton_Init();
     GroveRGB_Init();
     GroveLight_Init();

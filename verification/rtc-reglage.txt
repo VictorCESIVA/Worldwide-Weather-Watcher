@@ -1,0 +1,4 @@
+MODE=configuration confirme par lecture memoire sans arret cible.
+DATE=10,9,2026 -> OK RTC
+DAY=FRI -> OK RTC
+CLOCK=14:37:03 -> OK RTC

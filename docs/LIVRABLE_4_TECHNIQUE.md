@@ -111,6 +111,8 @@ Une RTC invalide produit une ligne console horodatée `NA` et empêche l'écritu
 
 Les commandes sont validées intégralement : nom connu, entier strict, domaine et cohérence des seuils. Le candidat est sauvegardé avant de remplacer la configuration active. `RESET` utilise le même mécanisme. Les commandes RTC valident aussi les jours réels des mois et les années bissextiles.
 
+En configuration, le dernier réglage RTC accepté est conservé en RAM. Si la relecture du composant échoue entre DATE, DAY et CLOCK, la commande suivante repart de ce réglage au lieu d'effacer la date précédente. Au premier réglage d'une RTC illisible, une base 2000-01-01 permet d'envoyer les trois commandes successives. Cette mémoire de travail est remise à zéro au démarrage et ne fournit jamais l'horodatage des mesures : celles-ci exigent une vraie lecture valide de la RTC.
+
 Le pilote EEPROM cible une AT24C32 avec adressage mémoire 16 bits et pages de 32 octets. Deux emplacements de 128 octets contiennent signature, numéro de séquence, paramètres et CRC32. La copie inactive est invalidée, son contenu est écrit, puis la signature est écrite en dernier. Une relecture vérifie la sauvegarde. L'ancienne copie reste disponible si une coupure intervient avant validation de la nouvelle.
 
 Les valeurs et domaines des paramètres sont détaillés dans [le guide utilisateur](LIVRABLE_4_UTILISATEUR.md). Les maxima d'intervalle et de timeout protègent les multiplications de durées ; ils ne sont pas présentés comme des bornes imposées par CESI.

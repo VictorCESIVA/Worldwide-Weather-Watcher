@@ -1,0 +1,622 @@
+Processing release (platform: ststm32@20.0.0; board: nucleo_l476rg; framework: stm32cube)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/ststm32/nucleo_l476rg.html
+PLATFORM: ST STM32 (20.0.0) > ST Nucleo L476RG
+HARDWARE: STM32L476RGT6 80MHz, 96KB RAM, 1MB Flash
+DEBUG: Current (stlink) On-board (stlink) External (blackmagic, cmsis-dap, jlink)
+PACKAGES: 
+ - framework-stm32cubel4 @ 1.18.2 
+ - tool-ldscripts-ststm32 @ 0.3.0 
+ - toolchain-gccarmnoneeabi @ 1.70201.0 (7.2.1)
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 61 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- cesi_grove
+|-- bosch_bme68x @ 4.4.8
+|-- bosch_bme280 @ 3.5.1
+|-- fatfs @ 0.12.3
+Building in release mode
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_adc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_adc_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_can.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_comp.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_cortex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_crc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_crc_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_cryp.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_cryp_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dac.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dac_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dcmi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dma.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dma2d.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dma_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_dsi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_exti.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_firewall.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_flash.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ramfunc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_gfxmmu.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_gpio.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_hash.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_hash_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_hcd.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_i2c.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_i2c_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_irda.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_iwdg.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_lcd.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_lptim.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_mmc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_mmc_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_nand.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_nor.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_opamp.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_opamp_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_ospi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_pcd.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_pcd_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_pka.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_pssi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_pwr.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_pwr_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_qspi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_rcc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_rcc_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_rng.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_rng_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_rtc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_rtc_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_sai.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_sai_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_sd.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_sd_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_smbus.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_smbus_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_spi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_spi_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_sram.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_swpmi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_tim.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_tim_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_tsc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_uart.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_uart_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_usart.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_usart_ex.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_hal_wwdg.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_adc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_comp.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_crc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_crs.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_dac.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_dma.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_dma2d.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_exti.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_fmc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_gpio.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_i2c.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_lptim.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_lpuart.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_opamp.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_pka.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_pwr.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_rcc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_rng.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_rtc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_sdmmc.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_spi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_swpmi.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_tim.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_usart.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_usb.o
+Compiling .pio/build/release/FrameworkHALDriver/Src/stm32l4xx_ll_utils.o
+Compiling .pio/build/release/src/eeprom.o
+Compiling .pio/build/release/src/main.o
+Compiling .pio/build/release/src/mesures.o
+Compiling .pio/build/release/src/modes.o
+Compiling .pio/build/release/src/nmea.o
+Compiling .pio/build/release/src/parametres.o
+Compiling .pio/build/release/src/serie.o
+Compiling .pio/build/release/src/setup.o
+Compiling .pio/build/release/src/station.o
+Compiling .pio/build/release/lib3b7/bosch_bme280/bme280.o
+Compiling .pio/build/release/libfce/bosch/bme68x.o
+Compiling .pio/build/release/lib858/fatfs/ff.o
+Compiling .pio/build/release/lib858/fatfs/unicode.o
+Compiling .pio/build/release/lib0e1/cesi_grove/grove_bme680.o
+Compiling .pio/build/release/lib0e1/cesi_grove/grove_button.o
+Compiling .pio/build/release/lib0e1/cesi_grove/grove_gps_air530z.o
+Compiling .pio/build/release/lib0e1/cesi_grove/grove_light.o
+Compiling .pio/build/release/lib0e1/cesi_grove/grove_rgb.o
+Compiling .pio/build/release/lib0e1/cesi_grove/grove_rtc_ds1307.o
+Compiling .pio/build/release/lib0e1/cesi_grove/sd_files.o
+Compiling .pio/build/release/lib0e1/cesi_grove/sd_logger.o
+Compiling .pio/build/release/FrameworkCMSISDevice/gcc/startup_stm32l476xx.o
+Compiling .pio/build/release/FrameworkCMSISDevice/system_stm32l4xx.o
+Linking .pio/build/release/firmware.elf
+Checking size .pio/build/release/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]   5.4% (used 5300 bytes from 98304 bytes)
+Flash: [=         ]   5.8% (used 61324 bytes from 1048576 bytes)
+Building .pio/build/release/firmware.bin
+========================= [SUCCESS] Took 3.39 seconds =========================
+
+Processing debug (platform: ststm32@20.0.0; board: nucleo_l476rg; framework: stm32cube)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/ststm32/nucleo_l476rg.html
+PLATFORM: ST STM32 (20.0.0) > ST Nucleo L476RG
+HARDWARE: STM32L476RGT6 80MHz, 96KB RAM, 1MB Flash
+DEBUG: Current (stlink) On-board (stlink) External (blackmagic, cmsis-dap, jlink)
+PACKAGES: 
+ - framework-stm32cubel4 @ 1.18.2 
+ - tool-ldscripts-ststm32 @ 0.3.0 
+ - toolchain-gccarmnoneeabi @ 1.70201.0 (7.2.1)
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 61 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- cesi_grove
+|-- bosch_bme68x @ 4.4.8
+|-- bosch_bme280 @ 3.5.1
+|-- fatfs @ 0.12.3
+Building in debug mode
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_adc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_adc_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_can.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_comp.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_cortex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_crc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_crc_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_cryp.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_cryp_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dac.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dac_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dcmi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dma.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dma2d.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dma_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_dsi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_exti.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_firewall.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_flash.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ramfunc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_gfxmmu.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_gpio.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_hash.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_hash_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_hcd.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_i2c.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_i2c_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_irda.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_iwdg.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_lcd.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_lptim.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_mmc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_mmc_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_nand.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_nor.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_opamp.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_opamp_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_ospi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_pcd.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_pcd_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_pka.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_pssi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_pwr.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_pwr_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_qspi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_rcc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_rcc_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_rng.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_rng_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_rtc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_rtc_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_sai.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_sai_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_sd.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_sd_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_smbus.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_smbus_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_spi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_spi_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_sram.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_swpmi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_tim.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_tim_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_tsc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_uart.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_uart_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_usart.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_usart_ex.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_hal_wwdg.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_adc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_comp.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_crc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_crs.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_dac.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_dma.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_dma2d.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_exti.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_fmc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_gpio.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_i2c.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_lptim.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_lpuart.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_opamp.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_pka.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_pwr.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_rcc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_rng.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_rtc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_sdmmc.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_spi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_swpmi.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_tim.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_usart.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_usb.o
+Compiling .pio/build/debug/FrameworkHALDriver/Src/stm32l4xx_ll_utils.o
+Compiling .pio/build/debug/src/eeprom.o
+Compiling .pio/build/debug/src/main.o
+Compiling .pio/build/debug/src/mesures.o
+Compiling .pio/build/debug/src/modes.o
+Compiling .pio/build/debug/src/nmea.o
+Compiling .pio/build/debug/src/parametres.o
+Compiling .pio/build/debug/src/serie.o
+Compiling .pio/build/debug/src/setup.o
+Compiling .pio/build/debug/src/station.o
+Compiling .pio/build/debug/lib3b7/bosch_bme280/bme280.o
+Compiling .pio/build/debug/libfce/bosch/bme68x.o
+Compiling .pio/build/debug/lib858/fatfs/ff.o
+Compiling .pio/build/debug/lib858/fatfs/unicode.o
+Compiling .pio/build/debug/lib0e1/cesi_grove/grove_bme680.o
+Compiling .pio/build/debug/lib0e1/cesi_grove/grove_button.o
+Compiling .pio/build/debug/lib0e1/cesi_grove/grove_gps_air530z.o
+Compiling .pio/build/debug/lib0e1/cesi_grove/grove_light.o
+Compiling .pio/build/debug/lib0e1/cesi_grove/grove_rgb.o
+Archiving .pio/build/debug/lib3b7/libbosch_bme280.a
+Indexing .pio/build/debug/lib3b7/libbosch_bme280.a
+Compiling .pio/build/debug/lib0e1/cesi_grove/grove_rtc_ds1307.o
+Archiving .pio/build/debug/libfce/libbosch.a
+Indexing .pio/build/debug/libfce/libbosch.a
+Compiling .pio/build/debug/lib0e1/cesi_grove/sd_files.o
+Compiling .pio/build/debug/lib0e1/cesi_grove/sd_logger.o
+Archiving .pio/build/debug/lib858/libfatfs.a
+Indexing .pio/build/debug/lib858/libfatfs.a
+Compiling .pio/build/debug/FrameworkCMSISDevice/gcc/startup_stm32l476xx.o
+Compiling .pio/build/debug/FrameworkCMSISDevice/system_stm32l4xx.o
+Archiving .pio/build/debug/libFrameworkCMSISDevice.a
+Indexing .pio/build/debug/libFrameworkCMSISDevice.a
+Archiving .pio/build/debug/lib0e1/libcesi_grove.a
+Indexing .pio/build/debug/lib0e1/libcesi_grove.a
+Linking .pio/build/debug/firmware.elf
+Checking size .pio/build/debug/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]   5.4% (used 5348 bytes from 98304 bytes)
+Flash: [=         ]   8.8% (used 92112 bytes from 1048576 bytes)
+Building .pio/build/debug/firmware.bin
+========================= [SUCCESS] Took 4.53 seconds =========================
+
+Processing diagnostic (platform: ststm32@20.0.0; board: nucleo_l476rg; framework: stm32cube)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/ststm32/nucleo_l476rg.html
+PLATFORM: ST STM32 (20.0.0) > ST Nucleo L476RG
+HARDWARE: STM32L476RGT6 80MHz, 96KB RAM, 1MB Flash
+DEBUG: Current (stlink) On-board (stlink) External (blackmagic, cmsis-dap, jlink)
+PACKAGES: 
+ - framework-stm32cubel4 @ 1.18.2 
+ - tool-ldscripts-ststm32 @ 0.3.0 
+ - toolchain-gccarmnoneeabi @ 1.70201.0 (7.2.1)
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 61 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- cesi_grove
+|-- bosch_bme68x @ 4.4.8
+|-- bosch_bme280 @ 3.5.1
+|-- fatfs @ 0.12.3
+Building in debug mode
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_adc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_adc_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_can.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_comp.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_cortex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_crc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_crc_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_cryp.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_cryp_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dac.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dac_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dcmi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dma.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dma2d.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dma_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_dsi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_exti.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_firewall.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_flash.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ramfunc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_gfxmmu.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_gpio.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_hash.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_hash_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_hcd.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_i2c.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_i2c_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_irda.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_iwdg.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_lcd.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_lptim.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_mmc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_mmc_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_nand.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_nor.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_opamp.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_opamp_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_ospi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_pcd.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_pcd_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_pka.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_pssi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_pwr.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_pwr_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_qspi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_rcc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_rcc_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_rng.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_rng_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_rtc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_rtc_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_sai.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_sai_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_sd.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_sd_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_smbus.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_smbus_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_spi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_spi_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_sram.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_swpmi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_tim.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_tim_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_tsc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_uart.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_uart_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_usart.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_usart_ex.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_hal_wwdg.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_adc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_comp.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_crc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_crs.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_dac.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_dma.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_dma2d.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_exti.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_fmc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_gpio.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_i2c.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_lptim.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_lpuart.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_opamp.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_pka.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_pwr.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_rcc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_rng.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_rtc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_sdmmc.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_spi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_swpmi.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_tim.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_usart.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_usb.o
+Compiling .pio/build/diagnostic/FrameworkHALDriver/Src/stm32l4xx_ll_utils.o
+Compiling .pio/build/diagnostic/src/diagnostic.o
+Compiling .pio/build/diagnostic/src/nmea.o
+Compiling .pio/build/diagnostic/src/parametres.o
+Compiling .pio/build/diagnostic/src/setup.o
+Compiling .pio/build/diagnostic/lib3b7/bosch_bme280/bme280.o
+Compiling .pio/build/diagnostic/libfce/bosch/bme68x.o
+Compiling .pio/build/diagnostic/lib858/fatfs/ff.o
+Compiling .pio/build/diagnostic/lib858/fatfs/unicode.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/grove_bme680.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/grove_button.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/grove_gps_air530z.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/grove_light.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/grove_rgb.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/grove_rtc_ds1307.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/sd_files.o
+Compiling .pio/build/diagnostic/lib0e1/cesi_grove/sd_logger.o
+Compiling .pio/build/diagnostic/FrameworkCMSISDevice/gcc/startup_stm32l476xx.o
+Compiling .pio/build/diagnostic/FrameworkCMSISDevice/system_stm32l4xx.o
+Checking size .pio/build/diagnostic/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [          ]   1.5% (used 1440 bytes from 98304 bytes)
+Flash: [          ]   4.1% (used 43336 bytes from 1048576 bytes)
+========================= [SUCCESS] Took 2.83 seconds =========================
+
+Processing diagnostic_sd_grove (platform: ststm32@20.0.0; board: nucleo_l476rg; framework: stm32cube)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/ststm32/nucleo_l476rg.html
+PLATFORM: ST STM32 (20.0.0) > ST Nucleo L476RG
+HARDWARE: STM32L476RGT6 80MHz, 96KB RAM, 1MB Flash
+DEBUG: Current (stlink) On-board (stlink) External (blackmagic, cmsis-dap, jlink)
+PACKAGES: 
+ - framework-stm32cubel4 @ 1.18.2 
+ - tool-ldscripts-ststm32 @ 0.3.0 
+ - toolchain-gccarmnoneeabi @ 1.70201.0 (7.2.1)
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 61 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- cesi_grove
+|-- bosch_bme68x @ 4.4.8
+|-- bosch_bme280 @ 3.5.1
+|-- fatfs @ 0.12.3
+Building in debug mode
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_adc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_adc_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_can.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_comp.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_cortex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_crc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_crc_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_cryp.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_cryp_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dac.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dac_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dcmi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dfsdm_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dma.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dma2d.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dma_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_dsi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_exti.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_firewall.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_flash.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_flash_ramfunc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_gfxmmu.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_gpio.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_hash.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_hash_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_hcd.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_i2c.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_i2c_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_irda.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_iwdg.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_lcd.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_lptim.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_ltdc_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_mmc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_mmc_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_nand.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_nor.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_opamp.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_opamp_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_ospi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_pcd.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_pcd_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_pka.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_pssi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_pwr.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_pwr_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_qspi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_rcc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_rcc_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_rng.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_rng_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_rtc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_rtc_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_sai.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_sai_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_sd.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_sd_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_smartcard_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_smbus.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_smbus_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_spi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_spi_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_sram.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_swpmi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_tim.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_tim_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_tsc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_uart.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_uart_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_usart.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_usart_ex.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_hal_wwdg.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_adc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_comp.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_crc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_crs.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_dac.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_dma.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_dma2d.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_exti.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_fmc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_gpio.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_i2c.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_lptim.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_lpuart.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_opamp.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_pka.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_pwr.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_rcc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_rng.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_rtc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_sdmmc.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_spi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_swpmi.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_tim.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_usart.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_usb.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkHALDriver/Src/stm32l4xx_ll_utils.o
+Compiling .pio/build/diagnostic_sd_grove/src/diagnostic_sd.o
+Compiling .pio/build/diagnostic_sd_grove/src/parametres.o
+Compiling .pio/build/diagnostic_sd_grove/src/setup.o
+Compiling .pio/build/diagnostic_sd_grove/lib3b7/bosch_bme280/bme280.o
+Compiling .pio/build/diagnostic_sd_grove/libfce/bosch/bme68x.o
+Compiling .pio/build/diagnostic_sd_grove/lib858/fatfs/ff.o
+Compiling .pio/build/diagnostic_sd_grove/lib858/fatfs/unicode.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/grove_bme680.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/grove_button.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/grove_gps_air530z.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/grove_light.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/grove_rgb.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/grove_rtc_ds1307.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/sd_files.o
+Compiling .pio/build/diagnostic_sd_grove/lib0e1/cesi_grove/sd_logger.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkCMSISDevice/gcc/startup_stm32l476xx.o
+Compiling .pio/build/diagnostic_sd_grove/FrameworkCMSISDevice/system_stm32l4xx.o
+Checking size .pio/build/diagnostic_sd_grove/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [          ]   1.4% (used 1392 bytes from 98304 bytes)
+Flash: [          ]   2.6% (used 27736 bytes from 1048576 bytes)
+========================= [SUCCESS] Took 2.78 seconds =========================
+
+Environment          Status    Duration
+-------------------  --------  ------------
+release              SUCCESS   00:00:03.386
+debug                SUCCESS   00:00:04.530
+diagnostic           SUCCESS   00:00:02.825
+diagnostic_sd_grove  SUCCESS   00:00:02.776
+========================= 4 succeeded in 00:00:13.517 =========================

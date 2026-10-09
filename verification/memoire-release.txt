@@ -1,27 +1,27 @@
 .pio/build/release/firmware.elf  :
 section              size        addr
 .isr_vector           392   134217728
-.text               57100   134218128
-.rodata              3688   134275232
-.ARM.extab              0   134278920
-.ARM                    8   134278920
-.preinit_array          0   134278928
-.init_array             4   134278928
-.fini_array             4   134278932
+.text               57148   134218128
+.rodata              3688   134275280
+.ARM.extab              0   134278968
+.ARM                    8   134278968
+.preinit_array          0   134278976
+.init_array             4   134278976
+.fini_array             4   134278980
 .data                 488   536870912
-.bss                 4800   536871400
-._user_heap_stack    1536   536876200
+.bss                 4812   536871400
+._user_heap_stack    1540   536876212
 .ARM.attributes        42           0
 .comment              126           0
 .debug_frame         6044           0
 .stab                 132           0
 .stabstr              279           0
-Total               74643
+Total               74707
 
 
 
 Plus grands cadres GCC des fonctions liees (un cadre seul, pas le pic de pile cumule) :
-  504 octets station.c:274:13:terminer_cycle [static]
+  504 octets station.c:281:13:terminer_cycle [static]
   312 octets nmea.c:38:6:nmea_gga [static]
   256 octets bme68x.c:540:8:bme68x_get_data [static]
   184 octets eeprom.c:78:6:parametres_sauver [static]
@@ -30,7 +30,7 @@ Plus grands cadres GCC des fonctions liees (un cadre seul, pas le pic de pile cu
   152 octets bme68x.c:1106:14:calc_gas_resistance_low.isra.0 [static]
   136 octets sd_files.c:38:13:archiver [static]
   112 octets bme68x.c:630:8:bme68x_set_heatr_conf [static]
-  104 octets station.c:456:6:station_boucle [static]
+  104 octets station.c:464:6:station_boucle [static]
   104 octets setup.c:125:6:SystemClock_Config [static]
   104 octets parametres.c:46:6:parametres_modifier [static]
    96 octets ff.c:3308:9:f_open [static]

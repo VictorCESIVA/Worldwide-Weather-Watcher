@@ -9,6 +9,8 @@
 UART_HandleTypeDef huart2, GPS_UART_HANDLE;
 static uint32_t temps;
 static bool r, v, eeprom_ok = true, rtc_present = true, env_present = true;
+static bool rtc_lisible = true;
+static RTC_DateTime rtc_memoire = {0, 0, 12, 6, 1, 1, 2000};
 static Parametres sauvegarde;
 static char entree[256], trame[128], derniere_ligne[256];
 static unsigned ei, gi, ecritures, fermetures, lectures;
@@ -58,14 +60,17 @@ bool GroveBME680_ReadEnvironment(Env_Data *d)
 }
 bool GroveRTC_GetDateTime(RTC_DateTime *d)
 {
-    if (!rtc_present)
+    if (!rtc_present || !rtc_lisible)
         return false;
-    *d = (RTC_DateTime){0, 0, 12, 6, 9, 10, 2026};
+    *d = rtc_memoire;
     return true;
 }
 bool GroveRTC_SetDateTime(const RTC_DateTime *d)
 {
-    return date_valide(d);
+    if (!rtc_present || !date_valide(d))
+        return false;
+    rtc_memoire = *d;
+    return true;
 }
 bool parametres_charger(Parametres *p)
 {
@@ -154,6 +159,24 @@ int main(void)
     avancer(1000);
     assert(lectures == avant);
     assert(led_r == 255 && led_g == 255 && led_b == 0);
+    /* Une relecture indisponible entre DATE, DAY et CLOCK ne doit pas
+     * effacer la date que le composant vient d'accepter.
+     */
+    strcpy(entree, "DATE=10,9,2026\n");
+    ei = 0;
+    avancer(100);
+    assert(rtc_memoire.year == 2026 && rtc_memoire.month == 10 && rtc_memoire.day == 9);
+    rtc_lisible = false;
+    strcpy(entree, "DAY=FRI\nCLOCK=13:14:15\n");
+    ei = 0;
+    avancer(100);
+    assert(rtc_memoire.year == 2026 && rtc_memoire.month == 10 && rtc_memoire.day == 9);
+    assert(rtc_memoire.dayOfWeek == 6 && rtc_memoire.hours == 13 &&
+           rtc_memoire.minutes == 14 && rtc_memoire.seconds == 15);
+    rtc_lisible = true;
+    strcpy(entree, "CLOCK=12:00:00\n");
+    ei = 0;
+    avancer(100);
     strcpy(entree, "LOG_INTERVAL=2\r\nTIMEOUT=2\r\n");
     ei = 0;
     avancer(100);

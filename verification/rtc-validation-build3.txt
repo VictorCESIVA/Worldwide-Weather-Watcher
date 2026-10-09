@@ -1,0 +1,20 @@
+BUILD=3 : test des commandes RTC en configuration temporaire au debogueur.
+Le demarrage rouge a deja ete confirme physiquement avec BUILD=2.
+DATE=10,9,2026 -> OK RTC
+DAY=FRI -> OK RTC
+CLOCK=14:46:58 -> OK RTC
+Retour standard par reset, sans maintien de bouton.
+
+3WW 1.0.0 LOT=CESI-2026 BUILD=3 MODE=standard
+PARAMETRES=defauts (EEPROM absente ou vierge) LOG_INTERVAL=10 FILE_MAX_SIZE=2048 TIMEOUT=30
+date;temperature_C;humidite_pct;pression_hPa;lumi_0_1023;niveau;latitude;longitude
+2026-10-09T14:46:59;22.3;46.3;1009.7;1023;forte;NA;NA
+[SD diag] try CS D2/PA10
+[SD diag] MISO idle bytes: FF FF FF FF FF FF FF FF
+[SD diag] CMD0 R1 first bytes: FF FF FF FF FF FF FF FF
+[SD diag] CMD0 failed on D2/PA10
+mdb 0x20000c0d 1 -> 0x20000c0d: 00
+mdb 0x20000c49 1 -> 0x20000c49: 01
+mdw 0xE000ED28 1 -> 0xe000ed28: 00000000
+mdw 0xE000ED2c 1 -> 0xe000ed2c: 00000000
+stm32l4x.cpu curstate -> running
