@@ -47,6 +47,8 @@ Victor confirme un Seeed Studio SD Card Shield v4.4 (04/01/2022). La [notice See
 
 Attention au routage réel : le [schéma Eagle constructeur de la v4.3](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) montre trois sélecteurs à pastilles `DI`, `DO`, `CLK`. Ils choisissent entre les signaux ICSP et D11/D12/D13. Le sujet CESI prévoit des fils depuis ICSP ; la présence de connecteurs Arduino ne prouve donc pas que le SPI y est déjà raccordé. La position de ces sélecteurs sur la v4.4 doit être identifiée physiquement avant de décider si des fils sont nécessaires. Ce contrôle de routage est distinct de l'échec de connexion USB observé même avec le lecteur vide.
 
+L'interposition d'un Grove Base Shield v2 ne crée pas cette liaison : dans le [schéma officiel Base Shield v2](https://files.seeedstudio.com/wiki/Base_Shield_V2/res/Base%20Shield%20v2_SCH.pdf), les signaux ICSP MOSI/MISO/SCK du composant U2 ne sont pas reliés aux nets D11/D12/D13. Le connecteur peut transmettre les contacts d'un ICSP situé en dessous ; sur la Nucleo, ce connecteur Arduino n'est pas présent. L'emboîtement du SD sur le Grove ne prouve donc pas la liaison SPI avec le microcontrôleur. Cette conclusion concerne le modèle Base Shield v2 ; la référence précise du Grove utilisé par Victor reste à confirmer.
+
 Les photos fournies par Victor montrent le connecteur ICSP bleu à six trous sous le shield et les trois sélecteurs DI/DO/CLK. Repérage du connecteur **vu par-dessous, lecteur SD en haut et connecteur ICSP en bas**, comme sur sa deuxième photo :
 
 ```text

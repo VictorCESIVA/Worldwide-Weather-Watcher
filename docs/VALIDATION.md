@@ -41,6 +41,8 @@ Traces : `verification/compilation.txt`, `verification/memoire-release.txt`. Les
 - Programme complet Release téléversé sur la Nucleo nue et Flash vérifiée (`Verified OK`). Console : après une fin de ligne pour resynchroniser la réception, `VERSION` répond `3WW 1.0.0 LOT=CESI-2026 BUILD=1`. Le programme complet remplace désormais le diagnostic sur la carte.
 - Photos du dessus et du dessous du support reçues : connecteur ICSP bleu à six trous identifié, ainsi que les sélecteurs DI/DO/CLK. Les trois positions SPI sont repérées dans la documentation technique à partir du fichier Eagle officiel et de l'orientation des photos. La continuité électrique et la cause de l'échec USB ne peuvent pas être prouvées par ces photos.
 - Prochain essai demandé : support SD séparé de la Nucleo, sans carte mémoire, avec seulement les fils 5V et GND entre les broches portant ces inscriptions. Si l'USB fonctionne dans cette configuration, ajout ultérieur de CS et des trois signaux SPI. Aucun résultat de cet essai n'est encore disponible.
+- Victor indique ne pas avoir de fils Dupont. L'essai séparé et le raccordement ICSP sont donc actuellement impossibles. Il précise que le connecteur ICSP SD s'emboîte sur son Grove. Vérification du schéma officiel Grove Base Shield v2 : ce modèle ne relie pas les contacts ICSP MOSI/MISO/SCK aux nets D11/D12/D13. La référence du Grove de Victor reste à confirmer ; aucune liaison SPI fonctionnelle n'a été démontrée.
+- Une vérification des capteurs sans support SD a été proposée : BME280 et RTC sur I²C, GPS sur A0, UART Grove libre. Ce remontage n'est pas encore confirmé.
 
 Les captures série et diagnostics bruts restent locaux afin de ne pas publier une éventuelle position GPS personnelle.
 
