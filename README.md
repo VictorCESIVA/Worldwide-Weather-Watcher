@@ -2,7 +2,7 @@
 
 Programme C pour NUCLEO-L476RG, dérivé de la base imposée [ValentinMoraine/Worldwide-Weather-Watcher](https://github.com/ValentinMoraine/Worldwide-Weather-Watcher). Livrable 1 déjà rendu ; ce dépôt prépare les livrables 2, 3 et 4.
 
-Le matériel confirmé est un capteur météo **BME280**, une **RTC Grove v2 PCF85063TP**, un GPS sur **A0**, un capteur de luminosité sur **A2**, une LED RGB sur **D6**, les boutons sur **D2**, et un support SD en SPI. Les brochages complets se trouvent dans la documentation technique.
+Le matériel identifié est un capteur météo **BME280**, une **RTC Grove v2 PCF85063TP**, un GPS raccordé sur **A0**, un Grove Base Shield **v2.1** et un Seeed SD Card Shield **v4.4**. Le programme de la station prévoit la luminosité sur **A2**, la LED RGB sur **D6** et les boutons sur **D2** ; leur validation physique reste à terminer. Les brochages complets se trouvent dans la documentation technique.
 
 **Validation encore incomplète :** une EEPROM externe AT24C32 est prévue pour respecter la mémoire demandée dans le PDF, mais elle n'a pas été identifiée dans le montage. Le PDF se contredit également sur le rouge maintenu cinq secondes en économique : cette version choisit retour standard et documente l'alternative. Consulter le compte rendu de validation avant la démonstration.
 
@@ -18,6 +18,8 @@ Prérequis : PlatformIO Core, compilateur C du poste pour les tests, `mkfs.fat` 
 ```
 
 Pour déboguer : `./scripts/projet.sh compile debug`. Pour tester les connexions : `./scripts/projet.sh diagnostic` téléverse un programme séparé de diagnostic. Pour revenir à la station, téléverser `release`.
+
+Le test isolé `./scripts/projet.sh diagnostic-sd` utilise un câblage différent, réservé au lecteur SD posé à côté de la carte. Suivre [sa procédure de câblage](docs/TEST_SD_GROVE.md) avant de l'utiliser. Ce diagnostic ne constitue pas la station complète.
 
 ## Documents
 

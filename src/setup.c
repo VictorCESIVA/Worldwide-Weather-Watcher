@@ -66,6 +66,19 @@ static void MX_SPI1_Init(void)
 
     GPIO_InitTypeDef gpio = {0};
 
+#ifdef SD_GROVE_BREAKOUT
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    gpio.Pin = GPIO_PIN_3 | GPIO_PIN_5; // PB3 SCK, PB5 MOSI
+    gpio.Mode = GPIO_MODE_AF_PP;
+    gpio.Pull = GPIO_NOPULL;
+    gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    gpio.Alternate = GPIO_AF5_SPI1;
+    HAL_GPIO_Init(GPIOB, &gpio);
+
+    gpio.Pin = GPIO_PIN_4; // PB4 MISO
+    gpio.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(GPIOB, &gpio);
+#else
     gpio.Pin = GPIO_PIN_5 | GPIO_PIN_7; // PA5 SCK, PA7 MOSI
     gpio.Mode = GPIO_MODE_AF_PP;
     gpio.Pull = GPIO_NOPULL;
@@ -80,6 +93,7 @@ static void MX_SPI1_Init(void)
     gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     gpio.Alternate = GPIO_AF5_SPI1;
     HAL_GPIO_Init(GPIOA, &gpio);
+#endif
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
     gpio.Pin = SD_CS_PIN;

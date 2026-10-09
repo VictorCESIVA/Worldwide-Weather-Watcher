@@ -29,7 +29,11 @@ static SDLoggerCardType g_card_type = SDLOGGER_CARD_UNKNOWN;
 static SDLoggerInitStatus g_init_status = SDLOGGER_INIT_ERR_CMD0;
 static uint8_t g_active_cs_index = 0;
 
+#ifdef SD_GROVE_BREAKOUT
+static const SDChipSelect g_cs_candidates[] = {{SD_CS_PORT, SD_CS_PIN, "D2/PA10"}};
+#else
 static const SDChipSelect g_cs_candidates[] = {{SD_CS_PORT, SD_CS_PIN, "D4/PB5"}};
+#endif
 
 #define SD_CS_CANDIDATE_COUNT ((uint8_t)(sizeof(g_cs_candidates) / sizeof(g_cs_candidates[0])))
 

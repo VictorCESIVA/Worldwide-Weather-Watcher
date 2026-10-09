@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage : ./scripts/projet.sh [compile|upload|monitor|test|diagnostic|memoire] [release|debug]
+# Usage : ./scripts/projet.sh [compile|upload|monitor|test|diagnostic|diagnostic-sd|memoire] [release|debug]
 set -euo pipefail
 cd "$(dirname "$0")/.."
 action=${1:-compile}
@@ -13,6 +13,7 @@ case "$action" in
  upload) "$pio_cmd" run -e "$mode" -t upload ;;
  monitor) "$pio_cmd" device monitor -b 115200 ;;
  diagnostic) "$pio_cmd" run -e diagnostic -t upload ;;
+ diagnostic-sd) "$pio_cmd" run -e diagnostic_sd_grove -t upload ;;
  test) ./scripts/test.sh ;;
  memoire) python3 scripts/memoire.py "$mode" ;;
  *) printf 'Action inconnue : %s\n' "$action" >&2; exit 1 ;;

@@ -72,6 +72,8 @@ Pour isoler les contacts mécaniques de l'empilement, un essai à côté de la N
 
 Le support SD reste séparé pendant cet essai. Les trois autres broches ICSP ne sont pas raccordées ; leur fonction conventionnelle ne prouve pas qu'elles soient toutes routées sur ce shield. Ne pas employer VIN comme alimentation 5V. Cet essai n'a pas encore été réalisé : il ne prouve pas que le défaut USB est résolu.
 
+Victor possède maintenant quatre adaptateurs Grove vers Dupont femelles. Une [procédure de diagnostic adaptée à ces câbles](TEST_SD_GROVE.md) utilise les ports Grove D2/D4 pour SPI1 et CS, et un troisième câble pour l'alimentation. Elle est réservée au programme `diagnostic_sd_grove`, compilé et téléversé : le programme complet `release` conserve le brochage du tableau initial. Les boutons doivent rester débranchés pendant ce diagnostic car D2/D3 sont alors utilisés par la SD.
+
 **Condition matérielle encore à résoudre :** l'EEPROM externe demandée par le PDF n'a pas été identifiée dans le montage. La version livrée ne remplace pas cette exigence par la SD ou la Flash. Sans EEPROM, les valeurs par défaut sont utilisables, mais les changements de paramètres sont refusés explicitement. Le réglage de la RTC reste possible.
 
 ## Architecture et notions du cours

@@ -50,8 +50,17 @@
  * SD Card Shield Seeed v4.4 (famille v4)
  * SPI Arduino : D11/D12/D13 et CS sur D4.
  */
+#ifdef SD_GROVE_BREAKOUT
+/* Diagnostic avec deux adaptateurs Grove vers Dupont femelles :
+ * D2 = CS (PA10), D3 = SCK (PB3), D4 = MOSI (PB5), D5 = MISO (PB4).
+ * Tous les autres modules doivent etre debranches pendant cet essai.
+ */
+#define SD_CS_PORT GPIOA
+#define SD_CS_PIN GPIO_PIN_10
+#else
 #define SD_CS_PORT GPIOB
 #define SD_CS_PIN GPIO_PIN_5
+#endif
 
 #define SD_SPI_HANDLE hspi1
 
