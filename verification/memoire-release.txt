@@ -1,13 +1,13 @@
 .pio/build/release/firmware.elf  :
 section              size        addr
 .isr_vector           392   134217728
-.text               57148   134218128
-.rodata              3688   134275280
-.ARM.extab              0   134278968
-.ARM                    8   134278968
-.preinit_array          0   134278976
-.init_array             4   134278976
-.fini_array             4   134278980
+.text               57156   134218128
+.rodata              3688   134275288
+.ARM.extab              0   134278976
+.ARM                    8   134278976
+.preinit_array          0   134278984
+.init_array             4   134278984
+.fini_array             4   134278988
 .data                 488   536870912
 .bss                 4812   536871400
 ._user_heap_stack    1540   536876212
@@ -16,7 +16,7 @@ section              size        addr
 .debug_frame         6044           0
 .stab                 132           0
 .stabstr              279           0
-Total               74707
+Total               74715
 
 
 
@@ -30,7 +30,7 @@ Plus grands cadres GCC des fonctions liees (un cadre seul, pas le pic de pile cu
   152 octets bme68x.c:1106:14:calc_gas_resistance_low.isra.0 [static]
   136 octets sd_files.c:38:13:archiver [static]
   112 octets bme68x.c:630:8:bme68x_set_heatr_conf [static]
-  104 octets station.c:464:6:station_boucle [static]
+  104 octets station.c:465:6:station_boucle [static]
   104 octets setup.c:125:6:SystemClock_Config [static]
   104 octets parametres.c:46:6:parametres_modifier [static]
    96 octets ff.c:3308:9:f_open [static]

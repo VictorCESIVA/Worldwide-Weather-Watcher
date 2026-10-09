@@ -8,6 +8,8 @@ Mettre sous tension sans tenir de bouton pour démarrer en standard. La LED est 
 
 Les valeurs météo et la luminosité sont les moyennes des dix dernières mesures réussies, ou des mesures disponibles au démarrage. Une mesure absente ou invalide apparaît `NA`, même si un historique existe. Le GPS affiche la position acquise pour le cycle courant.
 
+La catégorie de luminosité porte sur la moyenne affichée : faible sous `LUMIN_LOW`, forte au-dessus de `LUMIN_HIGH`, moyenne entre les deux seuils, bornes comprises.
+
 La station enregistre normalement toutes les dix minutes. Le premier cycle commence au démarrage. Un capteur absent peut retarder la ligne de trente secondes. Un GPS sans position valide produit `NA` ; sa première localisation doit être obtenue avec une bonne vue du ciel.
 
 ## Utiliser les boutons

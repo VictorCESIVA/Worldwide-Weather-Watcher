@@ -1,0 +1,9 @@
+Capture apres le televersement verifie de BUILD=4 ; ancien tampon serie exclu.
+3WW 1.0.0 LOT=CESI-2026 BUILD=4 MODE=standard
+PARAMETRES=defauts (EEPROM absente ou vierge) LOG_INTERVAL=10 FILE_MAX_SIZE=2048 TIMEOUT=30
+date;temperature_C;humidite_pct;pression_hPa;lumi_0_1023;niveau;latitude;longitude
+2026-10-09T14:55:42;22.3;46.8;1009.7;1023;forte;NA;NA
+[SD diag] try CS D2/PA10
+[SD diag] MISO idle bytes: FF FF FF FF FF FF FF FF
+[SD diag] CMD0 R1 first bytes: FF FF FF FF FF FF FF FF
+[SD diag] CMD0 failed on D2/PA10

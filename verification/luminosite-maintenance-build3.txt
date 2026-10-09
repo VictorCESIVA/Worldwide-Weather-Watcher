@@ -1,0 +1,12 @@
+14:49:45 mode=0 luminosite_derniere=1023/1023
+MODE=maintenance
+SD fermee : retrait autorise.
+14:50:29 mode=2 luminosite_derniere=47/1023
+14:50:59 mode=2 luminosite_derniere=258/1023
+2026-10-09T14:50:28;22.3;46.6;1009.6;535;faible;NA;NA
+2026-10-09T14:50:58;22.2;46.6;1009.6;442;moyenne;NA;NA
+14:51:29 mode=2 luminosite_derniere=1023/1023
+2026-10-09T14:51:28;22.2;46.6;1009.6;587;forte;NA;NA
+2026-10-09T14:51:58;22.2;46.7;1009.6;674;forte;NA;NA
+2026-10-09T14:52:28;22.2;46.7;1009.6;732;forte;NA;NA
+2026-10-09T14:52:58;22.2;46.8;1009.6;774;forte;NA;NA

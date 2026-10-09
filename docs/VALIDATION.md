@@ -8,10 +8,10 @@ Ce compte rendu distingue les vérifications réellement exécutées de la valid
 
 1. **Cœur** : domaines des commandes, chaînes invalides, débordements de nombres, paramètres inchangés après refus, dates bissextiles, conversion jour, transitions de modes, mille insertions circulaires aux limites d'int16, conservation de l'historique en erreur, remise à zéro des compteurs, checksum GPS, champs vides, coordonnées hors domaine et hémisphères.
 2. **SD** : vrai FatFs et vrai `sd_files.c`, avec secteurs servis par une image FAT16 de test de 16 Mo. Ajout, archivage avant dépassement, révision supérieure à neuf, démontage/remontage, erreur de secteurs et carte pleine. Aucun accès à la SD physique n'est effectué par ce test.
-3. **Station** : vrai `station.c` exécuté avec des périphériques et une horloge simulés. Pas d'acquisition en configuration, commandes EEPROM, refus si la sauvegarde échoue, sortie après trente minutes, arrêt complet des écritures en maintenance, retour au mode antérieur, intervalle doublé et GPS un cycle sur deux. La date réglée est conservée si une relecture RTC échoue entre DATE, DAY et CLOCK.
+3. **Station** : vrai `station.c` exécuté avec des périphériques et une horloge simulés. Pas d'acquisition en configuration, commandes EEPROM, refus si la sauvegarde échoue, sortie après trente minutes, arrêt complet des écritures en maintenance, retour au mode antérieur, intervalle doublé et GPS un cycle sur deux. La date réglée est conservée si une relecture RTC échoue entre DATE, DAY et CLOCK. La catégorie de luminosité correspond à la moyenne affichée, y compris exactement au seuil bas.
 4. **EEPROM** : vrai `eeprom.c` avec transactions I²C simulées. Pages de 32 octets, choix de la dernière copie valide, corruption CRC et coupure simulée après chacun des octets d'une sauvegarde. L'ancienne configuration reste lisible en cas d'échec.
 
-Dernière trace après correction RTC : `verification/tests-rtc.txt` ; trace précédente : `verification/tests.txt`. Les valeurs et coordonnées des tests sont des jeux de données de test ; elles ne proviennent pas de la position de la carte.
+Dernière trace : `verification/tests-lumi.txt` ; traces précédentes : `verification/tests-rtc.txt` et `verification/tests.txt`. Les valeurs et coordonnées des tests sont des jeux de données de test ; elles ne proviennent pas de la position de la carte.
 
 ## Compilation ARM exécutée
 
@@ -19,12 +19,12 @@ Dernière trace après correction RTC : `verification/tests-rtc.txt` ; trace pr�
 
 | Profil | RAM statique annoncée | Flash annoncée |
 |---|---:|---:|
-| Release | 5300 octets / 98304 | 61324 octets / 1048576 |
-| Debug | 5348 octets / 98304 | 92112 octets / 1048576 |
+| Release | 5300 octets / 98304 | 61332 octets / 1048576 |
+| Debug | 5348 octets / 98304 | 92120 octets / 1048576 |
 
 Ces chiffres correspondent aux dernières sources compilées lors de la rédaction. La RAM annoncée ne mesure pas le pic de pile ni les allocations internes des bibliothèques C. L'application n'appelle pas `malloc`, mais les bibliothèques C liées, notamment la conversion de texte en nombre, peuvent utiliser le tas.
 
-Dernières traces : `verification/compilation-rtc.txt`, `verification/memoire-release.txt`. Les cadres estimés par GCC sont filtrés sur les fonctions encore présentes dans l'ELF. Le pic de pile avec les appels de bibliothèque et les interruptions reste à mesurer physiquement.
+Dernières traces : `verification/compilation-lumi.txt`, `verification/memoire-release.txt`. Les cadres estimés par GCC sont filtrés sur les fonctions encore présentes dans l'ELF. Le pic de pile avec les appels de bibliothèque et les interruptions reste à mesurer physiquement.
 
 ## Vérifications sur la Nucleo
 
@@ -84,10 +84,18 @@ Premier cycle de BUILD=3 : **2026-10-09T14:45:23**, température **22,3 °C**, h
 
 Sur BUILD=3, nouvelle séquence DATE/DAY/CLOCK par la console (configuration temporaire au débogueur), puis redémarrage sans bouton : **2026-10-09T14:46:59** est relu dans une mesure réelle. `rtc_ok=1`, `CFSR=0`, `HFSR=0`, cible en exécution. Trace : `verification/rtc-validation-build3.txt`. La date et l'heure sont donc confirmées après redémarrage du microcontrôleur ; la tenue sur pile après coupure de l'USB reste à vérifier.
 
+### Luminosité et entrée en maintenance
+
+Victor masque le capteur de luminosité, maintient le rouge environ six secondes, puis découvre le capteur. Sur BUILD=3, la console annonce **MODE=maintenance** et **SD fermée** ; le débogueur lit `mode=2`, `sd_montee=0` sans arrêter la cible. La dernière luminosité passe de **1023** à **47**, puis revient à **1023** après découverte. La réponse physique du capteur et l'entrée maintenance par le rouge sont donc démontrées. Plusieurs cycles RTC/BME280 se terminent dans ce mode, avec `CFSR=0` dans le contrôle final. Trace : `verification/luminosite-maintenance-build3.txt`.
+
+Cette capture révèle une incohérence : la moyenne affichée **535** était classée faible d'après la dernière mesure **47** ; plus tard, **587** était classée forte d'après **1023**. La catégorie utilise maintenant la même moyenne que la valeur affichée. Un test de la vraie boucle, avec deux échantillons 511 puis 0, vérifie **255 = seuil bas**, catégorie **moyenne** : échec avant correction, réussite après. Les quatre suites ASan/UBSan et les quatre profils ARM passent ; cette correction porte uniquement sur la catégorie, sans modifier les lectures ADC ni les seuils.
+
+BUILD=4 est téléversé et **Verified OK** (`verification/flash-lumi.txt`). Après redémarrage en standard, une mesure réelle contient **2026-10-09T14:55:42**, **22,3 °C**, **46,8 %**, **1009,7 hPa**, luminosité **1023**, catégorie **forte**, GPS `NA` (`verification/station-build4.txt`). Le changement de catégorie sur une moyenne mêlant lumière et obscurité est vérifié par le test logiciel ci-dessus ; le nouveau cycle physique ne comporte pas un nouvel essai de masquage.
+
 ## Validation finale encore nécessaire
 
 - Confirmer la tenue de la RTC sur pile après coupure de l'USB et l'endurance du montage final ; les lectures BME280 et RTC et le réglage après redémarrage du microcontrôleur sont maintenant démontrés.
-- Valider la luminosité physique, le sens des boutons et les couleurs LED.
+- Confirmer les couleurs physiques de la LED alimentée en 5V et le retour maintenance par les boutons ; la réponse de luminosité, l'association rouge/vert et l'entrée maintenance sont démontrées.
 - Confirmer l'accès aux secteurs et fichiers de la SD réelle, puis montrer les archives et le remplacement en maintenance.
 - Terminer l'essai du support SD séparé pour distinguer un problème de contacts mécaniques d'un problème d'alimentation ou de support, puis valider le routage SPI.
 - Obtenir une position GPS valide avec vue du ciel.

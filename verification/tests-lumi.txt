@@ -1,0 +1,30 @@
+OK : commandes, dates, modes, moyennes, erreurs, GPS (ASan/UBSan).
+OK : FatFs sur image FAT16, append, revisions >9, remount, panne et SD pleine.
+
+3WW 1.0.0 LOT=CESI-2026 BUILD=0 MODE=configuration
+PARAMETRES=EEPROM LOG_INTERVAL=1 FILE_MAX_SIZE=2048 TIMEOUT=1
+date;temperature_C;humidite_pct;pression_hPa;lumi_0_1023;niveau;latitude;longitude
+OK RTC
+OK RTC
+OK RTC
+OK RTC
+OK EEPROM
+OK EEPROM
+ERREUR EEPROM : parametres non modifies.
+MODE=standard
+2026-10-09T12:00:00;20.0;50.0;1013.0;511;moyenne;NA;NA
+2026-10-09T12:00:00;20.0;50.0;1013.0;255;moyenne;NA;NA
+MODE=maintenance
+SD fermee : retrait autorise.
+NA;NA;NA;NA;340;moyenne;NA;NA
+NA;NA;NA;NA;383;moyenne;NA;NA
+NA;NA;NA;NA;408;moyenne;NA;NA
+2026-10-09T12:00:00;20.0;50.0;1013.0;425;moyenne;NA;NA
+2026-10-09T12:00:00;20.0;50.0;1013.0;438;moyenne;NA;NA
+MODE=standard
+2026-10-09T12:00:00;20.0;50.0;1013.0;454;moyenne;48.117300;11.516667
+MODE=economique
+2026-10-09T12:00:00;20.0;50.0;1013.0;459;moyenne;48.117300;11.516667
+2026-10-09T12:00:00;20.0;50.0;1013.0;459;moyenne;NA;NA
+OK : vraie boucle, configuration sans acquisition, EEPROM refusee, inactivite, maintenance et economie.
+OK : EEPROM, pages, CRC, absence et coupures a chaque octet de la sauvegarde.

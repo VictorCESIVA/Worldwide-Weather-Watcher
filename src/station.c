@@ -302,11 +302,12 @@ static void terminer_cycle(void)
     }
     else
         strcpy(position, "NA;NA");
+    int moyenne_lumi = mesure_moyenne(&lumi);
     const char *niveau = !lumi.valide
                              ? "NA"
-                             : (lumi.derniere < config.lumin_low
+                             : (moyenne_lumi < config.lumin_low
                                     ? "faible"
-                                    : (lumi.derniere > config.lumin_high ? "forte" : "moyenne"));
+                                    : (moyenne_lumi > config.lumin_high ? "forte" : "moyenne"));
     int len = snprintf(ligne, sizeof ligne, "%s;%s;%s;%s;%s;%s;%s\r\n", dt, tt, ht, pt, lt, niveau,
                        position);
     printf("%s", ligne);

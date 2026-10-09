@@ -12,7 +12,7 @@ Les pages se réfèrent au PDF CESI « Mode de fonctionnement », cinq pages, ve
 | Standard au démarrage | PDF p.1 | `station_init` | Boucle simulée, carte |
 | Configuration au démarrage rouge | PDF p.1 | Lecture bouton initial, acquisitions désactivées | Boucle simulée + démarrage rouge confirmé physiquement (BUILD=2) |
 | Retour après 30 minutes sans activité | PDF p.1 | `activite`, différence en millisecondes | Horloge simulée sur vraie boucle |
-| Maintenance, retour au précédent | PDF p.1 et p.5 | Mode mémorisé, démontage SD | Boucle simulée + physique |
+| Maintenance, retour au précédent | PDF p.1 et p.5 | Mode mémorisé, démontage SD | Boucle simulée ; entrée maintenance et SD démontée confirmées physiquement |
 | Économique : intervalle x2, GPS un sur deux | PDF p.5 | Intervalle temporaire, compteur de cycles | Boucle simulée |
 | Rouge depuis économique | PDF p.1, contradiction interne | Constante explicite, choix par défaut retour standard | Décision tuteur restante |
 | Couleurs et défauts | PDF p.1-2 | `led`, cycle d'une seconde | Logique + couleurs physiques à vérifier |
@@ -22,7 +22,7 @@ Les pages se réfèrent au PDF CESI « Mode de fonctionnement », cinq pages, ve
 | Sauvegarde en EEPROM | PDF p.2 | AT24C32, deux copies et CRC | Simulation d'EEPROM ; composant absent à résoudre |
 | Paramètres et RESET/VERSION | PDF p.2-4 | Validation et sauvegarde atomique au niveau applicatif | Tests domaines et refus |
 | TIMEOUT puis défaut après deux mesures | PDF p.3 | Deux timeouts consécutifs, succès remet à zéro | Test compteur + vraie boucle |
-| LUMIN et catégories | PDF p.3 | ADC 12 bits normalisé 10 bits, seuils inclusifs dans catégorie moyenne | Code + montage |
+| LUMIN et catégories | PDF p.3 | ADC 12 bits normalisé 10 bits, catégorie de la moyenne affichée, seuils inclusifs dans catégorie moyenne | Réaction physique au masquage + test de la vraie boucle au seuil bas |
 | Température -40 à 85, seuils -10/60 | PDF p.3-4 | Types et validation avant conversion | Tests C |
 | Hygrométrie filtrée par température | PDF p.4 | `HYGR_MINT`, `HYGR_MAXT` | Boucle |
 | Pression 300-1100, seuils 850/1080 | PDF p.4 | Valeurs converties et bornées | Tests C |

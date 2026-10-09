@@ -15,6 +15,7 @@ static Parametres sauvegarde;
 static char entree[256], trame[128], derniere_ligne[256];
 static unsigned ei, gi, ecritures, fermetures, lectures;
 static uint8_t led_r, led_g, led_b;
+static uint16_t lumi_brute = 2048;
 uint32_t HAL_GetTick(void)
 {
     return temps;
@@ -48,7 +49,7 @@ void GroveRGB_SetColor(uint8_t a, uint8_t b, uint8_t c)
 uint16_t GroveLight_ReadRaw(void)
 {
     ++lectures;
-    return 2048;
+    return lumi_brute;
 }
 bool GroveBME680_ReadEnvironment(Env_Data *d)
 {
@@ -190,6 +191,15 @@ int main(void)
     r = false;
     avancer(1800000);
     assert(lectures > avant);
+    avancer(3000);
+    assert(strstr(derniere_ligne, ";511;moyenne;"));
+    /* La categorie porte sur la moyenne affichee : (511 + 0) / 2 = 255,
+     * exactement le seuil bas, donc moyenne meme si le dernier echantillon est 0.
+     */
+    lumi_brute = 0;
+    avancer(120000);
+    assert(strstr(derniere_ligne, ";255;moyenne;"));
+    lumi_brute = 2048;
     env_present = false;
     rtc_present = false;
     avancer(3000);
