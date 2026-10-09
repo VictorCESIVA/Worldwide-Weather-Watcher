@@ -25,14 +25,21 @@
 
 /*
  * Grove Dual Button v1.0
- * À brancher sur un port digital Grove, par exemple D2.
- * À adapter selon le port choisi et le mapping réel.
+ * D8 sur le montage avec adaptateurs SD : D2/D3 servent deja au lecteur.
+ * D2 reste disponible dans le profil SPI Arduino initial.
  */
+#ifdef SD_GROVE_BREAKOUT
+#define BUTTON1_PORT GPIOA
+#define BUTTON1_PIN GPIO_PIN_9
+#define BUTTON2_PORT GPIOC
+#define BUTTON2_PIN GPIO_PIN_7
+#else
 #define BUTTON1_PORT GPIOA
 #define BUTTON1_PIN GPIO_PIN_10
 
 #define BUTTON2_PORT GPIOB
 #define BUTTON2_PIN GPIO_PIN_3
+#endif
 
 /*
  * Grove GPS Air530Z
@@ -41,8 +48,8 @@
  */
 
 /*
- * Grove RTC v1.2 DS1307 + BME680
- * Tous deux sur I2C.
+ * Montage identifie : RTC PCF85063TP et BME280 sur I2C.
+ * Les pilotes conservent aussi la compatibilite DS1307/BME680.
  */
 #define GROVE_I2C_HANDLE hi2c1
 
@@ -51,15 +58,23 @@
  * SPI Arduino : D11/D12/D13 et CS sur D4.
  */
 #ifdef SD_GROVE_BREAKOUT
-/* Diagnostic avec deux adaptateurs Grove vers Dupont femelles :
+/* Montage avec deux adaptateurs Grove vers Dupont femelles :
  * D2 = CS (PA10), D3 = SCK (PB3), D4 = MOSI (PB5), D5 = MISO (PB4).
- * Tous les autres modules doivent etre debranches pendant cet essai.
+ * Boutons sur D8 ; leur initialisation ne touche pas les contacts SPI.
  */
 #define SD_CS_PORT GPIOA
 #define SD_CS_PIN GPIO_PIN_10
+#define SD_GPIO_PORT GPIOB
+#define SD_SCK_PIN GPIO_PIN_3
+#define SD_MOSI_PIN GPIO_PIN_5
+#define SD_MISO_PIN GPIO_PIN_4
 #else
 #define SD_CS_PORT GPIOB
 #define SD_CS_PIN GPIO_PIN_5
+#define SD_GPIO_PORT GPIOA
+#define SD_SCK_PIN GPIO_PIN_5
+#define SD_MOSI_PIN GPIO_PIN_7
+#define SD_MISO_PIN GPIO_PIN_6
 #endif
 
 #define SD_SPI_HANDLE hspi1

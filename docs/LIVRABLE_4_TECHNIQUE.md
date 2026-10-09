@@ -25,56 +25,47 @@ flowchart LR
 
 ## Matériel et brochage
 
-Couper l'alimentation avant de modifier le câblage. Les broches viennent de la base CESI et de la NUCLEO-L476RG.
+Couper l'alimentation avant de modifier le câblage. Le montage utilise Nucleo → Grove Base Shield v2.1, sélecteur sur **3V3**, avec le lecteur SD posé à côté et trois adaptateurs Grove vers Dupont femelles. Les profils `release`, `debug` et de diagnostic utilisent le même SPI. Les broches sont configurées dans `board_pins.h` et `setup.c`.
 
 | Module | Port shield / connexion | Broches STM32 |
 |---|---|---|
-| BME280 confirmé par identifiant `0x60` | I²C, adresse `0x76` | PB8 SCL, PB9 SDA |
-| RTC Grove v2 PCF85063TP confirmée | I²C, adresse `0x51` | PB8 SCL, PB9 SDA |
+| BME280 identifié par `0x60` | I²C, adresse `0x76` | PB8 SCL, PB9 SDA |
+| RTC Grove v2 PCF85063TP | I²C, adresse `0x51` | PB8 SCL, PB9 SDA |
 | EEPROM externe AT24C32 prévue | I²C, adresse `0x50`, A0/A1/A2 à 0, WP à 0 | PB8 SCL, PB9 SDA |
 | Luminosité | A2 | PA4, ADC1 canal 9 |
 | LED Chainable RGB P9813 | D6 | PB10 horloge, PA8 données |
-| Bouton rouge | Première ligne de D2 | PA10, entrée active à 0 |
-| Bouton vert | Deuxième ligne de D2 | PB3, entrée active à 0 |
-| GPS sur connecteur Grove | A0 | PA0 réception UART4, PA1 émission ; échange RX/TX activé dans UART4 |
+| Bouton rouge | Première ligne de **D8** | PA9, entrée active à 0 |
+| Bouton vert | Deuxième ligne de **D8** | PC7, entrée active à 0 |
+| GPS | A0 | PA0 réception UART4, PA1 émission ; échange RX/TX activé dans UART4 |
 | Console ST-LINK | USB ST-LINK de la Nucleo | PA2 USART2 TX, PA3 RX |
-| SD CS | D4 | PB5 |
-| SD MOSI, MISO, SCK | D11, D12, D13 ; routage à vérifier selon la version du shield | PA7, PA6, PA5 |
+| SD CS | Jaune du câble Grove D2 → broche SD 4 | PA10 |
+| SD SCK | Blanc du câble Grove D2 → SD SCK | PB3, SPI1 AF5 |
+| SD MOSI | Jaune du câble Grove D4 → SD MOSI | PB5, SPI1 AF5 |
+| SD MISO | Blanc du câble Grove D4 → SD MISO | PB4, SPI1 AF5 |
 
-Le GPS ne doit pas occuper le connecteur UART du shield relié à la console ST-LINK. La LED embarquée de la Nucleo partage PA5 avec SCK ; elle n'est pas utilisée comme indicateur du programme.
+Le GPS reste sur A0 et le port UART du Grove reste libre pour la console ST-LINK. Les boutons sont déplacés sur D8 car D2/D3 servent à la SD. Leur initialisation ne modifie pas les GPIO du SPI. La LED embarquée PA5 n'est pas utilisée comme indicateur de la station ; l'indication repose sur le module RGB.
 
-Victor confirme un Seeed Studio SD Card Shield v4.4 (04/01/2022). La [notice Seeed de la famille V4](https://wiki.seeedstudio.com/SD_Card_shield_V4.0/) indique D4 pour CS, D11 pour les données vers la SD, D12 pour les données depuis la SD et D13 pour l'horloge. Si ces signaux sont déjà reliés par les connecteurs empilés, aucun fil supplémentaire n'est nécessaire. L'ordre et l'alignement de l'empilement restent à vérifier sur le montage réel.
+### Alimentation du lecteur SD
 
-Attention au routage réel : le [schéma Eagle constructeur de la v4.3](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) montre trois sélecteurs à pastilles `DI`, `DO`, `CLK`. Ils choisissent entre les signaux ICSP et D11/D12/D13. Le sujet CESI prévoit des fils depuis ICSP ; la présence de connecteurs Arduino ne prouve donc pas que le SPI y est déjà raccordé. La position de ces sélecteurs sur la v4.4 doit être identifiée physiquement avant de décider si des fils sont nécessaires. Ce contrôle de routage est distinct de l'échec de connexion USB observé même avec le lecteur vide.
+Le troisième adaptateur se branche par sa prise blanche dans le port **I²C du lecteur SD**, marqué 5V. Ses bouts rouge et noir vont respectivement sur Nucleo **CN7-18 (+5V)** et **CN7-20 (GND)** ; ses bouts jaune et blanc restent libres. Les rouge/noir des adaptateurs D2/D4 restent libres. Le lecteur reçoit ainsi 5V, tandis que le Base Shield reste sur 3V3 pour les modules et l'entrée analogique. Voir [UM1724, tableau 32](https://www.st.com/resource/en/user_manual/dm00105823.pdf) pour CN7.
 
-Victor confirme un Grove Base Shield **v2.1**. Le [dossier constructeur disponible](https://wiki.seeedstudio.com/Base_Shield_V2/) comporte un circuit imprimé marqué **v2.0, 03/10/2014**. Dans ce schéma, les signaux ICSP MOSI/MISO/SCK du composant U2 ne sont pas reliés aux nets D11/D12/D13. Le connecteur peut transmettre les contacts d'un ICSP situé en dessous ; sur la Nucleo, ce connecteur Arduino n'est pas présent. L'emboîtement du SD sur le Grove ne prouve donc pas à lui seul la liaison SPI avec le microcontrôleur. La continuité réelle sur la v2.1 doit encore être vérifiée : le schéma de la v2.0 n'est pas présenté comme une preuve de cette révision.
+### Routage SPI du lecteur
 
-Les photos fournies par Victor montrent le connecteur ICSP bleu à six trous sous le shield et les trois sélecteurs DI/DO/CLK. Repérage du connecteur **vu par-dessous, lecteur SD en haut et connecteur ICSP en bas**, comme sur sa deuxième photo :
+Le Seeed SD Card Shield v4.4 est identifié ; les fichiers disponibles sont ceux de la v4.3. Les sélecteurs DI/DO/CLK de cette famille choisissent ICSP (A) ou les broches latérales Arduino 11/12/13 (B). La [notice Seeed](https://wiki.seeedstudio.com/SD_Card_shield_V4.0/) donne CS = 4, MOSI = 11, MISO = 12 et SCK = 13. Le programme conserve les mêmes GPIO STM32 pour les deux chemins ; seule l'extrémité sur le lecteur change.
+
+Repérage ICSP **vu de dessus, logement SD en haut et bloc de six contacts en bas** :
 
 ```text
                     gauche       milieu       droite
-rangée du haut      MISO         SCK          non utilisé
+rangée du haut      non utilisé  SCK          MISO
 rangée du bas       non utilisé  MOSI         non utilisé
 ```
 
-Pour le profil SPI initial : haut gauche → D12, haut milieu → D13, bas milieu → D11. Ce repérage ne s'applique pas à une vue de dessus : gauche et droite sont inversées. **Correction du 09/10/2026 :** le premier repérage utilisait une autre variante du connecteur incluse dans la bibliothèque Eagle. La variante effectivement sélectionnée pour U2 est `'WITH/-SILK'` : MISO = pastille 33, SCK = 34, MOSI = 37. Ces affectations ont été vérifiées à la fois dans les connexions du schéma et dans les nets du fichier `.brd`. La continuité des sélecteurs de la v4.4 reste à confirmer par mesure ou par un échange SPI réussi.
+La variante effectivement sélectionnée pour U2 dans le [fichier Eagle constructeur](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) est `'WITH/-SILK'` : MISO = pastille 33, SCK = 34, MOSI = 37. La vue par-dessous inverse gauche et droite. Le premier repérage diffusé utilisait une autre variante de la bibliothèque et est corrigé ; le détail des contrôles est conservé dans [la validation](VALIDATION.md).
 
-Pour isoler les contacts mécaniques de l'empilement, un essai à côté de la Nucleo est prévu, USB débranché pendant le câblage. Commencer avec uniquement 5V et GND, sur les longues rangées portant ces inscriptions, sans carte mémoire ; vérifier la connexion USB avant d'ajouter les signaux. Si ce premier essai fonctionne, le raccordement complet externe comporte six fils :
+La [procédure SD](TEST_SD_GROVE.md) précise le câblage et le contrôle GPIO séparé. **État matériel :** le lecteur reste sans réponse CMD0 sur les deux chemins essayés. Une microSD de 8 Go est détectée comme FAT32 et montée par le lecteur du PC. L'écriture depuis la Nucleo n'est pas encore validée ; les sélecteurs et l'alimentation du shield restent à contrôler électriquement. L'accès USB a été rétabli par une réinitialisation ciblée de ST-LINK.
 
-| Support SD | Nucleo / broche accessible sur le shield Grove |
-|---|---|
-| 5V, rangée marquée 5V | 5V |
-| GND, rangée marquée GND | GND |
-| ICSP MOSI | D11 |
-| ICSP MISO | D12 |
-| ICSP SCK | D13 |
-| Broche Arduino 4 (CS) | D4 |
-
-Le support SD reste séparé pendant cet essai. Les trois autres broches ICSP ne sont pas raccordées ; leur fonction conventionnelle ne prouve pas qu'elles soient toutes routées sur ce shield. Ne pas employer VIN comme alimentation 5V. Cet essai n'a pas encore été réalisé : il ne prouve pas que le défaut USB est résolu.
-
-Victor possède maintenant quatre adaptateurs Grove vers Dupont femelles. Une [procédure de diagnostic adaptée à ces câbles](TEST_SD_GROVE.md) utilise les ports Grove D2/D4 pour SPI1 et CS, et un troisième câble pour l'alimentation. Elle est réservée au programme `diagnostic_sd_grove`, compilé et téléversé : le programme complet `release` conserve le brochage du tableau initial. Les boutons doivent rester débranchés pendant ce diagnostic car D2/D3 sont alors utilisés par la SD.
-
-**Condition matérielle encore à résoudre :** l'EEPROM externe demandée par le PDF n'a pas été identifiée dans le montage. La version livrée ne remplace pas cette exigence par la SD ou la Flash. Sans EEPROM, les valeurs par défaut sont utilisables, mais les changements de paramètres sont refusés explicitement. Le réglage de la RTC reste possible.
+**EEPROM encore à fournir :** l'AT24C32 demandée pour conserver les paramètres n'a pas été identifiée. Le programme ne remplace pas cette exigence par la SD ou la Flash. Sans EEPROM, les valeurs par défaut sont utilisables et les changements de paramètres sont refusés explicitement. Le réglage de la RTC reste possible.
 
 ## Architecture et notions du cours
 

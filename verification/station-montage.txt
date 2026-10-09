@@ -1,0 +1,10 @@
+09/10/2026 - Programme complet Release, Verified OK.
+SPI Grove D2/D4, boutons D8. Carte SD dans le lecteur du PC.
+Coordonnees GPS exclues du rapport public.
+
+
+3WW 1.0.0 LOT=CESI-2026 BUILD=1 MODE=standard
+PARAMETRES=defauts (EEPROM absente ou vierge) LOG_INTERVAL=10 FILE_MAX_SIZE=2048 TIMEOUT=30
+date;temperature_C;humidite_pct;pression_hPa;lumi_0_1023;niveau;GPS_MASQUE;GPS_MASQUE
+3WW 1.0.0 LOT=CESI-2026 BUILD=1
+NA;22.5;49.4;1010.4;862;forte;GPS_MASQUE;GPS_MASQUE

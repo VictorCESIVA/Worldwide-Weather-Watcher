@@ -23,3 +23,15 @@ SD init=0 statut=1
 GPIO CS haut=1 bas=0
 GPIO CMD0 reponse=FF (attendu 01)
 Fin du diagnostic. RESET pour refaire l'essai.
+
+Essai par broches laterales SD 11/12/13, carte 8 Go confirmee :
+
+3WW diagnostic SD Grove : D2=CS D3=SCK D4=MOSI D5=MISO
+[SD diag] try CS D2/PA10
+[SD diag] MISO idle bytes: FF FF FF FF FF FF FF FF
+[SD diag] CMD0 R1 first bytes: FF FF FF FF FF FF FF FF
+[SD diag] CMD0 failed on D2/PA10
+SD init=0 statut=1
+GPIO CS haut=1 bas=0
+GPIO CMD0 reponse=FF (attendu 01)
+Fin du diagnostic. RESET pour refaire l'essai.

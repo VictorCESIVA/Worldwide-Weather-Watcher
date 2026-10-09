@@ -1,13 +1,13 @@
 .pio/build/release/firmware.elf  :
 section              size        addr
 .isr_vector           392   134217728
-.text               57084   134218128
-.rodata              3688   134275216
-.ARM.extab              0   134278904
-.ARM                    8   134278904
-.preinit_array          0   134278912
-.init_array             4   134278912
-.fini_array             4   134278916
+.text               57100   134218128
+.rodata              3688   134275232
+.ARM.extab              0   134278920
+.ARM                    8   134278920
+.preinit_array          0   134278928
+.init_array             4   134278928
+.fini_array             4   134278932
 .data                 488   536870912
 .bss                 4800   536871400
 ._user_heap_stack    1536   536876200
@@ -16,7 +16,7 @@ section              size        addr
 .debug_frame         6044           0
 .stab                 132           0
 .stabstr              279           0
-Total               74627
+Total               74643
 
 
 
@@ -31,9 +31,9 @@ Plus grands cadres GCC des fonctions liees (un cadre seul, pas le pic de pile cu
   136 octets sd_files.c:38:13:archiver [static]
   112 octets bme68x.c:630:8:bme68x_set_heatr_conf [static]
   104 octets station.c:456:6:station_boucle [static]
-  104 octets setup.c:111:6:SystemClock_Config [static]
+  104 octets setup.c:125:6:SystemClock_Config [static]
   104 octets parametres.c:46:6:parametres_modifier [static]
    96 octets ff.c:3308:9:f_open [static]
-   80 octets sd_logger.c:129:6:SDLogger_Init [static]
-   72 octets setup.c:195:6:Global_Init [static]
+   80 octets sd_logger.c:133:6:SDLogger_Init [static]
+   72 octets setup.c:209:6:Global_Init [static]
 Les .su ne couvrent pas les bibliotheques C precompilees. Le pic avec interruptions doit etre mesure sur carte.

@@ -318,36 +318,36 @@ static void SD_ReconfigPinsGPIO(void)
     /* Disable SPI1 peripheral while we take over the pins */
     SD_SPI_HANDLE.Instance->CR1 &= ~SPI_CR1_SPE;
 
-    /* PA5 = SCK, PA7 = MOSI: push-pull outputs */
-    gpio.Pin = GPIO_PIN_5 | GPIO_PIN_7;
+    /* SCK and MOSI: push-pull outputs for the selected board mapping. */
+    gpio.Pin = SD_SCK_PIN | SD_MOSI_PIN;
     gpio.Mode = GPIO_MODE_OUTPUT_PP;
     gpio.Pull = GPIO_NOPULL;
     gpio.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOA, &gpio);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); /* SCK idle low  */
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);   /* MOSI idle high */
+    HAL_GPIO_Init(SD_GPIO_PORT, &gpio);
+    HAL_GPIO_WritePin(SD_GPIO_PORT, SD_SCK_PIN, GPIO_PIN_RESET); /* SCK idle low  */
+    HAL_GPIO_WritePin(SD_GPIO_PORT, SD_MOSI_PIN, GPIO_PIN_SET);   /* MOSI idle high */
 
-    /* PA6 = MISO: input with pull-up */
-    gpio.Pin = GPIO_PIN_6;
+    /* MISO: input with pull-up. */
+    gpio.Pin = SD_MISO_PIN;
     gpio.Mode = GPIO_MODE_INPUT;
     gpio.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(GPIOA, &gpio);
+    HAL_GPIO_Init(SD_GPIO_PORT, &gpio);
 }
 
 static void SD_ReconfigPinsSPI(void)
 {
     GPIO_InitTypeDef gpio = {0};
 
-    gpio.Pin = GPIO_PIN_5 | GPIO_PIN_7;
+    gpio.Pin = SD_SCK_PIN | SD_MOSI_PIN;
     gpio.Mode = GPIO_MODE_AF_PP;
     gpio.Pull = GPIO_NOPULL;
     gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     gpio.Alternate = GPIO_AF5_SPI1;
-    HAL_GPIO_Init(GPIOA, &gpio);
+    HAL_GPIO_Init(SD_GPIO_PORT, &gpio);
 
-    gpio.Pin = GPIO_PIN_6;
+    gpio.Pin = SD_MISO_PIN;
     gpio.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(GPIOA, &gpio);
+    HAL_GPIO_Init(SD_GPIO_PORT, &gpio);
 
     SD_SPI_HANDLE.Instance->CR1 |= SPI_CR1_SPE;
 }
@@ -359,15 +359,15 @@ static uint8_t SD_BitBangByte(uint8_t tx)
 
     for (bit = 0; bit < 8U; ++bit)
     {
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, (tx & 0x80U) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(SD_GPIO_PORT, SD_MOSI_PIN, (tx & 0x80U) ? GPIO_PIN_SET : GPIO_PIN_RESET);
         tx <<= 1;
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); /* rising edge  */
+        HAL_GPIO_WritePin(SD_GPIO_PORT, SD_SCK_PIN, GPIO_PIN_SET); /* rising edge  */
         rx <<= 1;
-        if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET)
+        if (HAL_GPIO_ReadPin(SD_GPIO_PORT, SD_MISO_PIN) == GPIO_PIN_SET)
         {
             rx |= 1U;
         }
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); /* falling edge */
+        HAL_GPIO_WritePin(SD_GPIO_PORT, SD_SCK_PIN, GPIO_PIN_RESET); /* falling edge */
     }
 
     return rx;
@@ -390,14 +390,10 @@ bool SDLogger_BitBangCMD0Test(void)
     cs_rb = HAL_GPIO_ReadPin(SD_CS_PORT, SD_CS_PIN);
     printf("[SD bitbang] CS readback LOW:  %d (expected 0)\r\n", cs_rb);
 
-    /* Raw IDR dump: GPIOA bits 5(SCK) 6(MISO) 7(MOSI), GPIOB bit 5(CS) */
-    {
-        uint32_t idr_a = GPIOA->IDR;
-        uint32_t idr_b = GPIOB->IDR;
-        printf("[SD bitbang] GPIOA IDR: SCK(5)=%lu MISO(6)=%lu MOSI(7)=%lu\r\n", (idr_a >> 5U) & 1U,
-               (idr_a >> 6U) & 1U, (idr_a >> 7U) & 1U);
-        printf("[SD bitbang] GPIOB IDR: CS(5)=%lu\r\n", (idr_b >> 5U) & 1U);
-    }
+    printf("[SD bitbang] SCK=%d MISO=%d MOSI=%d\r\n",
+           HAL_GPIO_ReadPin(SD_GPIO_PORT, SD_SCK_PIN),
+           HAL_GPIO_ReadPin(SD_GPIO_PORT, SD_MISO_PIN),
+           HAL_GPIO_ReadPin(SD_GPIO_PORT, SD_MOSI_PIN));
 
     HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_SET);
     HAL_Delay(10U);
@@ -409,7 +405,7 @@ bool SDLogger_BitBangCMD0Test(void)
     }
 
     /* MISO state just before CMD0 */
-    printf("[SD bitbang] MISO before CMD0: %d\r\n", HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6));
+    printf("[SD bitbang] MISO before CMD0: %d\r\n", HAL_GPIO_ReadPin(SD_GPIO_PORT, SD_MISO_PIN));
 
     /* CS low, send CMD0 */
     HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, GPIO_PIN_RESET);
@@ -439,11 +435,11 @@ bool SDLogger_BitBangCMD0Test(void)
 
     if (r1 == 0x01U)
     {
-        printf("[SD bitbang] CMD0 OK -> SPI hardware config issue\r\n");
+        printf("[SD bitbang] CMD0 OK with GPIO control\r\n");
         return true;
     }
 
-    printf("[SD bitbang] CMD0 still failed -> physical wiring/shield issue\r\n");
+    printf("[SD bitbang] CMD0 also failed with GPIO control\r\n");
     return false;
 }
 

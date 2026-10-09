@@ -44,7 +44,7 @@ rangée du bas       non utilisé  MOSI         non utilisé
 
 La vue par-dessous inverse gauche et droite. Seuls ces trois contacts ICSP sont utilisés. Le repérage vient de la variante **effectivement choisie** pour U2 dans le [fichier Eagle Seeed v4.3](https://files.seeedstudio.com/wiki/SD_Card_shield_V4.0/res/SD_Card_Shield_v4.3_eagle_file.zip) : `'WITH/-SILK'`, pastilles 33 MISO, 34 SCK, 37 MOSI. Le premier plan communiqué utilisait une autre variante de cette bibliothèque et était erroné ; ce dessin le corrige. La continuité des sélecteurs DI/DO/CLK sur l'exemplaire v4.4 reste à confirmer. Si le lecteur ne répond pas, vérifier cette continuité avant de conclure à une panne du logiciel.
 
-Les signaux PB3/PB4/PB5 possèdent la fonction SPI1 en AF5 dans la [fiche technique STM32L476](https://www.st.com/resource/en/datasheet/stm32l476re.pdf). Le programme emploie ce SPI matériel. Les boutons normalement sur D2 doivent rester débranchés pendant ce test.
+Les signaux PB3/PB4/PB5 possèdent la fonction SPI1 en AF5 dans la [fiche technique STM32L476](https://www.st.com/resource/en/datasheet/stm32l476re.pdf). Le programme emploie ce SPI matériel. Les boutons du programme complet sont sur D8 ; les autres modules restent débranchés pendant ce diagnostic isolé.
 
 ### Autre chemin de routage du lecteur
 
@@ -56,7 +56,7 @@ Le diagnostic se compile avec `pio run -e diagnostic_sd_grove`. Le téléverser 
 
 Le programme tente l'initialisation, monte FatFs, choisit le premier nom libre entre `3WWT000.LOG` et `3WWT999.LOG`, écrit `3WW test SD` suivi de CR/LF (13 octets), synchronise, ferme et relit le fichier. `FA_CREATE_NEW` protège les fichiers déjà présents. La réussite exige `init=1`, `montee=1`, `ecriture=1`, `relecture=1`, `test=1`. Un fichier partiel peut rester en cas d'échec ; il n'est pas effacé automatiquement.
 
-Si la console ne fonctionne pas, la sonde peut lire `diag_sd_init`, `diag_sd_statut`, `diag_sd_montage`, `diag_sd_ecriture` et `diag_sd_lecture`. Après un échec d'initialisation, le diagnostic compare aussi CMD0 en pilotant directement les mêmes GPIO, avec une horloge plafonnée à 200 kHz par le compteur de cycles du Cortex-M4. `diag_sd_cmd0_gpio` expose le résultat ; ce test n'est pas compilé dans la station. Le bouton RESET relance un essai et peut créer un nouveau fichier. Après le diagnostic, le programme `release` exige à nouveau son propre brochage décrit dans la documentation technique. Ce câblage D2/D4 n'est pas encore un profil de station complète.
+Si la console ne fonctionne pas, la sonde peut lire `diag_sd_init`, `diag_sd_statut`, `diag_sd_montage`, `diag_sd_ecriture` et `diag_sd_lecture`. Après un échec d'initialisation, le diagnostic compare aussi CMD0 en pilotant directement les mêmes GPIO, avec une horloge plafonnée à 200 kHz par le compteur de cycles du Cortex-M4. `diag_sd_cmd0_gpio` expose le résultat ; ce test n'est pas compilé dans la station. Le bouton RESET relance un essai et peut créer un nouveau fichier. Pour revenir au programme complet, téléverser `release`, conserver les adaptateurs D2/D4 et brancher les boutons sur D8.
 
 ## Récupération de la connexion USB sous Linux
 
@@ -64,4 +64,4 @@ Si Linux détecte ST-LINK mais laisse sa configuration USB vide (`can't set conf
 
 Cette opération a rétabli `/dev/ttyACM0` et l'accès OpenOCD sur le montage, sans déplacer de fil. Elle ne démontre pas l'origine exacte de l'échec initial. La [documentation Linux](https://cdn.kernel.org/doc/html/latest/driver-api/usb/error-codes.html) traite `EPROTO` comme une erreur de protocole USB ; elle ne suffit pas à attribuer une faute au câblage du projet.
 
-État au 09/10/2026 : compilation et téléversement vérifiés. L'accès USB et la console sont rétablis après réinitialisation ciblée de ST-LINK, sans déplacement de fil. Le repérage ICSP initial était erroné ; il est corrigé dans ce document et Victor confirme les trois contacts déplacés. Le diagnostic SPI matériel et son contrôle par GPIO reçoivent encore `FF` à CMD0. Victor confirme une carte de 8 Go ; le test du chemin latéral 11/12/13 est demandé. Le routage DI/DO/CLK et le lecteur restent à contrôler. Aucune écriture/relecture physique n'a encore été validée.
+État au 09/10/2026 : compilation et téléversement vérifiés. L'accès USB et la console sont rétablis après réinitialisation ciblée de ST-LINK, sans déplacement de fil. Le repérage ICSP initial était erroné ; il est corrigé dans ce document. Les deux chemins, ICSP puis 11/12/13, ont été essayés avec une carte de 8 Go : SPI matériel et GPIO reçoivent `FF` à CMD0. Le lecteur du PC détecte cette carte et monte son volume FAT32. Le routage DI/DO/CLK et l'alimentation du shield restent à contrôler électriquement. Aucune écriture/relecture depuis la Nucleo n'a encore été validée.

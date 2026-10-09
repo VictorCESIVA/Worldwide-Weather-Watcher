@@ -1,0 +1,9 @@
+09/10/2026 - Controle de la carte dans le lecteur du PC
+SDHC detectee, capacite annoncee par Linux : 7,26 GiB (carte 8 Go).
+Partition mmcblk0p1 : FAT32, montee par le bureau.
+Taille du volume : 7 783 579 648 octets.
+Espace libre : 7 783 546 880 octets.
+Le noyau signale un retrait precedent sans demontage propre.
+Aucun formatage, aucune reparation et aucune ecriture de fichier effectues.
+Pas de lecture brute des secteurs : permission utilisateur indisponible.
+Ce controle valide la detection et le montage par le PC, pas le lecteur Seeed en SPI.

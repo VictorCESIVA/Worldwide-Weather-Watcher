@@ -15,16 +15,16 @@ Trace : `verification/tests.txt`. Les valeurs et coordonnées des tests sont des
 
 ## Compilation ARM exécutée
 
-`pio run -e release -e debug` : deux profils compilés avec succès, sans avertissement dans la dernière trace.
+`pio run -e release -e debug -e diagnostic -e diagnostic_sd_grove` : quatre profils compilés avec succès, sans avertissement C dans la dernière trace.
 
 | Profil | RAM statique annoncée | Flash annoncée |
 |---|---:|---:|
-| Release | 5288 octets / 98304 | 61260 octets / 1048576 |
-| Debug | 5332 octets / 98304 | 92104 octets / 1048576 |
+| Release | 5288 octets / 98304 | 61276 octets / 1048576 |
+| Debug | 5332 octets / 98304 | 92056 octets / 1048576 |
 
 Ces chiffres correspondent aux dernières sources compilées lors de la rédaction. La RAM annoncée ne mesure pas le pic de pile ni les allocations internes des bibliothèques C. L'application n'appelle pas `malloc`, mais les bibliothèques C liées, notamment la conversion de texte en nombre, peuvent utiliser le tas.
 
-Traces : `verification/compilation.txt`, `verification/memoire-release.txt`. Les cadres estimés par GCC sont filtrés sur les fonctions encore présentes dans l'ELF. Le pic de pile avec les appels de bibliothèque et les interruptions reste à mesurer physiquement.
+Traces : `verification/compilation-montage-grove.txt`, `verification/memoire-release.txt`. Les cadres estimés par GCC sont filtrés sur les fonctions encore présentes dans l'ELF. Le pic de pile avec les appels de bibliothèque et les interruptions reste à mesurer physiquement.
 
 ## Vérifications sur la Nucleo
 
@@ -54,6 +54,9 @@ Traces : `verification/compilation.txt`, `verification/memoire-release.txt`. Les
 - Victor confirme la remise de la carte mémoire. Le diagnostic SPI matériel reçoit uniquement `FF` en réponse à CMD0 ; pas de montage FAT ni d'écriture. Un diagnostic GPIO sur les mêmes contacts est ensuite compilé, téléversé et vérifié. Il lit également `FF`, avec CS lu à 1 puis 0 côté STM32. Ce résultat seul ne permet pas de conclure à une erreur de branchement.
 - **Erreur de repérage corrigée :** le premier plan ICSP communiqué utilisait une autre variante de connecteur de la bibliothèque Eagle. La variante choisie pour U2 dans le schéma est `'WITH/-SILK'`, recoupée avec les nets du circuit imprimé : MISO pastille 33, SCK pastille 34, MOSI pastille 37. Dans la vue de dessus fournie, SCK est en haut milieu, MOSI en bas milieu et MISO en haut droite. Victor suivait les instructions initiales erronées ; les documents sont corrigés et il confirme le déplacement des trois contacts.
 - Après correction, SPI matériel et GPIO reçoivent encore `FF` à CMD0, CS lu à 1 puis 0. La console et ST-LINK fonctionnent. Captures SD sans coordonnées personnelles : `verification/sd-physique.txt`. Aucune écriture physique n'a été réalisée. Victor confirme une carte de **8 Go** dans l'adaptateur. Un essai est demandé sur l'autre chemin prévu par le circuit : blanc D2 vers broche SD 13, jaune D4 vers SD 11, blanc D4 vers SD 12, CS sur 4 et alimentation inchangés. Aucune soudure ou modification logicielle n'est nécessaire pour ce contrôle.
+- Victor confirme cet essai latéral ; SPI matériel et GPIO lisent encore `FF`. Il dispose d'un lecteur SD pour son PC, mais pas de multimètre. Une fois la carte insérée dans le lecteur du PC, Linux détecte une SDHC de 7,26 GiB et monte sa partition FAT32. Le noyau signale un précédent retrait sans démontage propre ; aucune réparation ni écriture n'est effectuée. Compte rendu : `verification/carte-sd-pc.txt`. La détection et le format sont confirmés ; cela ne valide pas le shield Seeed.
+- Programme complet adapté aux câbles disponibles : SPI1 PB3/PB4/PB5, CS PA10, boutons sur D8 (PA9/PC7). Les horloges GPIOA/B/C sont activées pour les boutons ; leur initialisation ne modifie pas PB3. Les profils `release`, `debug`, `diagnostic` et `diagnostic_sd_grove` compilent sans avertissement C : `verification/compilation-montage-grove.txt`. Les commandes de compilation et de téléversement restent identiques. Un remontage des capteurs sur ce brochage est demandé pour poursuivre les tests.
+- Victor confirme les modules remontés. Le programme complet `release` est téléversé et **Verified OK**. Console : mode standard, version `3WW 1.0.0 LOT=CESI-2026 BUILD=1`, valeurs par défaut car EEPROM absente ou vierge. Premier cycle physique : température **22,5 °C**, humidité **49,4 %**, pression **1010,4 hPa**, luminosité **862/1023**, catégorie forte. La date est invalide et la position GPS est `NA` dans cette capture. La carte SD reste dans le lecteur du PC. Trace publiée avec coordonnées masquées : `verification/station-montage.txt`. Le programme complet remplace le diagnostic sur la Nucleo.
 
 Les captures série et diagnostics bruts restent locaux afin de ne pas publier une éventuelle position GPS personnelle.
 
